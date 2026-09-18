@@ -23,6 +23,9 @@
      * 3) Paste the Web App URL here
      */
     googleScriptUrl: "",
+    /** Committee login for Excel download only */
+    adminEmail: "durgadevihirekerur@gmail.com",
+    adminPassword: "durgadevi@581111",
   };
 
   const SEVA_LABELS = {
@@ -212,14 +215,21 @@
       labelTxn: "Transaction / UTR (optional)",
       submitBtn: "Submit Seva Registration",
       formSuccess:
-        "Thank you. Registration saved. Use WhatsApp buttons below for welcome message and temple notify. Download Excel anytime.",
+        "Thank you. Registration saved. Use WhatsApp buttons below for welcome message and temple notify.",
       formError: "Please fill all required fields with valid details.",
       afterTitle: "Registration saved — next steps (all free)",
       afterLead:
         "Your details are stored. Pay via QR if pending, then use WhatsApp to send welcome / notify the temple.",
-      excelBtn: "Download Excel (all members)",
       excelAdminBtn: "Download member Excel sheet",
-      excelNote: "Free: all registrations saved in this browser / download as Excel anytime.",
+      excelNote: "Only logged-in temple users can download the member Excel sheet.",
+      adminTitle: "Committee login — Excel",
+      adminEmailLabel: "Email",
+      adminPasswordLabel: "Password",
+      adminLoginBtn: "Login",
+      adminLogoutBtn: "Logout",
+      adminLoggedIn: "Logged in as committee",
+      adminLoginError: "Invalid email or password.",
+      adminLoginOk: "Login successful. You can download Excel now.",
       waWelcomeBtn: "WhatsApp Welcome",
       waTempleBtn: "Notify Temple WhatsApp",
       darshanEyebrow: "Temple Gallery",
@@ -413,14 +423,21 @@
       labelTxn: "ವಹಿವಾಟು / UTR (ಐಚ್ಛಿಕ)",
       submitBtn: "ಸೇವಾ ನೋಂದಣಿ ಸಲ್ಲಿಸಿ",
       formSuccess:
-        "ಧನ್ಯವಾದಗಳು. ನೋಂದಣಿ ಉಳಿಸಲಾಗಿದೆ. ಕೆಳಗಿನ WhatsApp ಬಟನ್‌ಗಳು ಮತ್ತು Excel ಡೌನ್‌ಲೋಡ್ ಬಳಸಿ.",
+        "ಧನ್ಯವಾದಗಳು. ನೋಂದಣಿ ಉಳಿಸಲಾಗಿದೆ. ಕೆಳಗಿನ WhatsApp ಬಟನ್‌ಗಳನ್ನು ಬಳಸಿ.",
       formError: "ದಯವಿಟ್ಟು ಎಲ್ಲಾ ಅಗತ್ಯ ಕ್ಷೇತ್ರಗಳನ್ನು ಸರಿಯಾಗಿ ತುಂಬಿ.",
       afterTitle: "ನೋಂದಣಿ ಉಳಿಸಲಾಗಿದೆ — ಮುಂದಿನ ಹಂತಗಳು (ಉಚಿತ)",
       afterLead:
         "ನಿಮ್ಮ ವಿವರಗಳು ಉಳಿಸಲಾಗಿವೆ. ಬಾಕಿ ಇದ್ದರೆ QR ಮೂಲಕ ಪಾವತಿಸಿ, ನಂತರ WhatsApp ಸ್ವಾಗತ / ದೇವಸ್ಥಾನಕ್ಕೆ ಸಂದೇಶ ಕಳುಹಿಸಿ.",
-      excelBtn: "Excel ಡೌನ್‌ಲೋಡ್ (ಎಲ್ಲಾ ಸದಸ್ಯರು)",
       excelAdminBtn: "ಸದಸ್ಯರ Excel ಶೀಟ್ ಡೌನ್‌ಲೋಡ್",
-      excelNote: "ಉಚಿತ: ಎಲ್ಲಾ ನೋಂದಣಿಗಳು ಈ ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಉಳಿಯುತ್ತವೆ / Excel ಡೌನ್‌ಲೋಡ್.",
+      excelNote: "ಲಾಗಿನ್ ಆದ ದೇವಸ್ಥಾನ ಬಳಕೆದಾರರು ಮಾತ್ರ Excel ಡೌನ್‌ಲೋಡ್ ಮಾಡಬಹುದು.",
+      adminTitle: "ಸಮಿತಿ ಲಾಗಿನ್ — Excel",
+      adminEmailLabel: "ಇಮೇಲ್",
+      adminPasswordLabel: "ಪಾಸ್‌ವರ್ಡ್",
+      adminLoginBtn: "ಲಾಗಿನ್",
+      adminLogoutBtn: "ಲಾಗ್‌ಔಟ್",
+      adminLoggedIn: "ಸಮಿತಿ ಲಾಗಿನ್ ಆಗಿದೆ",
+      adminLoginError: "ಇಮೇಲ್ ಅಥವಾ ಪಾಸ್‌ವರ್ಡ್ ತಪ್ಪಾಗಿದೆ.",
+      adminLoginOk: "ಲಾಗಿನ್ ಯಶಸ್ವಿ. ಈಗ Excel ಡೌನ್‌ಲೋಡ್ ಮಾಡಬಹುದು.",
       waWelcomeBtn: "WhatsApp ಸ್ವಾಗತ",
       waTempleBtn: "ದೇವಸ್ಥಾನ WhatsApp ಗೆ ತಿಳಿಸಿ",
       darshanEyebrow: "ದೇವಸ್ಥಾನ ಗ್ಯಾಲರಿ",
@@ -607,6 +624,12 @@
   }
 
   function downloadExcel() {
+    if (!isAdminLoggedIn()) {
+      const dict = translations[currentLang];
+      alert(dict.adminLoginError);
+      document.getElementById("admin-excel")?.scrollIntoView({ behavior: "smooth" });
+      return;
+    }
     if (typeof XLSX === "undefined") {
       alert("Excel library still loading. Please try again in a second.");
       return;
@@ -636,6 +659,78 @@
     const book = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(book, sheet, "Registrations");
     XLSX.writeFile(book, `durgadevi-navaratri-seva-${new Date().toISOString().slice(0, 10)}.xlsx`);
+  }
+
+  function isAdminLoggedIn() {
+    return sessionStorage.getItem("durga-admin") === "1";
+  }
+
+  function syncAdminUI() {
+    const loginForm = document.getElementById("admin-login");
+    const panel = document.getElementById("admin-panel");
+    const loggedIn = isAdminLoggedIn();
+    if (loginForm) loginForm.hidden = loggedIn;
+    if (panel) panel.hidden = !loggedIn;
+  }
+
+  function setupAdminAuth() {
+    const loginForm = document.getElementById("admin-login");
+    const status = document.getElementById("admin-login-status");
+    const excelAdmin = document.getElementById("excel-admin-btn");
+    const logoutBtn = document.getElementById("admin-logout-btn");
+
+    syncAdminUI();
+
+    if (excelAdmin) {
+      excelAdmin.addEventListener("click", downloadExcel);
+    }
+
+    if (logoutBtn) {
+      logoutBtn.addEventListener("click", () => {
+        sessionStorage.removeItem("durga-admin");
+        syncAdminUI();
+        if (loginForm) loginForm.reset();
+        if (status) {
+          status.hidden = true;
+          status.textContent = "";
+        }
+      });
+    }
+
+    if (!loginForm) return;
+
+    loginForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const dict = translations[currentLang];
+      const email = String(loginForm.elements.adminEmail.value || "")
+        .trim()
+        .toLowerCase();
+      const password = String(loginForm.elements.adminPassword.value || "");
+
+      const ok =
+        email === CONFIG.adminEmail.toLowerCase() &&
+        password === CONFIG.adminPassword;
+
+      if (!ok) {
+        if (status) {
+          status.hidden = false;
+          status.classList.add("is-error");
+          status.textContent = dict.adminLoginError;
+        }
+        sessionStorage.removeItem("durga-admin");
+        syncAdminUI();
+        return;
+      }
+
+      sessionStorage.setItem("durga-admin", "1");
+      syncAdminUI();
+      if (status) {
+        status.hidden = false;
+        status.classList.remove("is-error");
+        status.textContent = dict.adminLoginOk;
+      }
+      loginForm.reset();
+    });
   }
 
   function welcomeMessage(data) {
@@ -805,6 +900,7 @@
   setupNav();
   setupLangToggle();
   setupSevaForm();
+  setupAdminAuth();
   tickCountdown();
   setInterval(tickCountdown, 1000);
 })();

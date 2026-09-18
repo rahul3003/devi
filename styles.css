@@ -860,11 +860,59 @@ ul, ol {
 }
 
 .admin-excel {
-  margin: 1.25rem 0 0.75rem;
+  margin: 1.5rem 0 0.75rem;
+  padding: 1.2rem 1.1rem;
+  border: 1px solid rgba(212, 160, 23, 0.28);
+  background: rgba(26, 7, 12, 0.45);
+}
+
+.admin-title {
+  font-size: 1.25rem;
+  color: var(--cream);
+  margin-bottom: 0.35rem;
+}
+
+.admin-login {
+  display: grid;
+  gap: 0.85rem;
+  margin-top: 1rem;
+  max-width: 22rem;
+}
+
+.admin-login label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--gold-400);
+}
+
+.admin-login input {
+  width: 100%;
+  margin-top: 0.35rem;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid rgba(212, 160, 23, 0.35);
+  background: rgba(26, 7, 12, 0.55);
+  color: var(--cream);
+  font: inherit;
+}
+
+.admin-login input:focus {
+  outline: 2px solid var(--gold-500);
+  outline-offset: 1px;
+}
+
+.admin-panel {
+  margin-top: 1rem;
+}
+
+.admin-logged {
+  color: var(--gold-400);
+  font-weight: 600;
+  margin-bottom: 0.75rem;
 }
 
 .admin-excel .btn {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0;
 }
 
 .upi-id {

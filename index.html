@@ -401,7 +401,6 @@
           <div class="after-actions">
             <a class="btn btn-primary" id="wa-welcome-btn" target="_blank" rel="noopener">WhatsApp Welcome</a>
             <a class="btn btn-ghost" id="wa-temple-btn" target="_blank" rel="noopener">Notify Temple WhatsApp</a>
-            <button type="button" class="btn btn-ghost" id="excel-download-btn" data-i18n="excelBtn">Download Excel (all members)</button>
           </div>
         </div>
       </div>
@@ -496,9 +495,30 @@
               <a href="mailto:seva@sridurgadevihirekerur.org">seva@sridurgadevihirekerur.org</a>
             </li>
           </ul>
-          <div class="admin-excel">
-            <button type="button" class="btn btn-ghost" id="excel-admin-btn" data-i18n="excelAdminBtn">Download member Excel sheet</button>
-            <p class="visit-note" data-i18n="excelNote">Free: all registrations saved in this browser / download as Excel anytime.</p>
+          <div class="admin-excel" id="admin-excel">
+            <h3 class="admin-title" data-i18n="adminTitle">Committee login — Excel</h3>
+            <p class="visit-note" data-i18n="excelNote">Only logged-in temple users can download the member Excel sheet.</p>
+
+            <form class="admin-login" id="admin-login" autocomplete="on">
+              <label>
+                <span data-i18n="adminEmailLabel">Email</span>
+                <input type="email" name="adminEmail" required autocomplete="username" />
+              </label>
+              <label>
+                <span data-i18n="adminPasswordLabel">Password</span>
+                <input type="password" name="adminPassword" required autocomplete="current-password" />
+              </label>
+              <button type="submit" class="btn btn-primary" data-i18n="adminLoginBtn">Login</button>
+              <p class="form-status" id="admin-login-status" role="status" hidden></p>
+            </form>
+
+            <div class="admin-panel" id="admin-panel" hidden>
+              <p class="admin-logged" data-i18n="adminLoggedIn">Logged in as committee</p>
+              <div class="after-actions">
+                <button type="button" class="btn btn-primary" id="excel-admin-btn" data-i18n="excelAdminBtn">Download member Excel sheet</button>
+                <button type="button" class="btn btn-ghost" id="admin-logout-btn" data-i18n="adminLogoutBtn">Logout</button>
+              </div>
+            </div>
           </div>
           <p class="visit-note" data-i18n="visitNote">
             WhatsApp seva desk: +91 78926 55210
