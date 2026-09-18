@@ -319,11 +319,15 @@
             </label>
             <label>
               <span data-i18n="labelGotra">Gotra</span>
-              <input type="text" name="gotra" required />
+              <select name="gotra" id="gotra-select" required></select>
+            </label>
+            <label>
+              <span data-i18n="labelRashi">Rashi</span>
+              <select name="rashi" id="rashi-select" required></select>
             </label>
             <label>
               <span data-i18n="labelNakshatra">Nakshatra</span>
-              <input type="text" name="nakshatra" required />
+              <select name="nakshatra" id="nakshatra-select" required></select>
             </label>
             <label>
               <span data-i18n="labelMobile">Mobile Number</span>
@@ -352,9 +356,11 @@
                 <span data-i18n="sevaKumkum">Kumkumarchana</span>
               </label>
             </fieldset>
-            <label class="day-select full" hidden data-day-select>
-              <span data-i18n="labelDayPick">Preferred Day</span>
-              <select name="day">
+            <div class="day-select full" data-day-select hidden>
+              <label for="day-select">
+                <span data-i18n="labelDayPick">Preferred Day</span>
+              </label>
+              <select name="day" id="day-select">
                 <option value="1" data-i18n="optDay1">Day 1 — Mahaganapathi Homa</option>
                 <option value="2" data-i18n="optDay2">Day 2 — Navagraha Homa</option>
                 <option value="3" data-i18n="optDay3">Day 3 — Sudarshana Homa</option>
@@ -365,7 +371,7 @@
                 <option value="8" data-i18n="optDay8">Day 8 — Durga Homa</option>
                 <option value="9" data-i18n="optDay9">Day 9 — Vijayadashami Poornahuti</option>
               </select>
-            </label>
+            </div>
           </div>
 
           <div class="payment-block">

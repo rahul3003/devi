@@ -705,6 +705,22 @@ ul, ol {
   letter-spacing: 0.02em;
 }
 
+.day-select {
+  display: none !important;
+}
+
+.day-select.is-open {
+  display: block !important;
+}
+
+.day-select label {
+  margin-bottom: 0;
+}
+
+.day-select select {
+  margin-top: 0.35rem;
+}
+
 .seva-form label span,
 .seva-form legend {
   margin-bottom: 0.4rem;

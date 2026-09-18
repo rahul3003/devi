@@ -43,6 +43,75 @@
     },
   };
 
+  const GOTRAS = [
+    { en: "Bharadwaja", kn: "ಭರದ್ವಾಜ" },
+    { en: "Kashyapa", kn: "ಕಶ್ಯಪ" },
+    { en: "Vasishtha", kn: "ವಸಿಷ್ಠ" },
+    { en: "Vishwamitra", kn: "ವಿಶ್ವಾಮಿತ್ರ" },
+    { en: "Gautama", kn: "ಗೌತಮ" },
+    { en: "Atri", kn: "ಅತ್ರಿ" },
+    { en: "Agastya", kn: "ಅಗಸ್ತ್ಯ" },
+    { en: "Jamadagni", kn: "ಜಮದಗ್ನಿ" },
+    { en: "Bhrigu", kn: "ಭೃಗು" },
+    { en: "Angirasa", kn: "ಅಂಗಿರಸ" },
+    { en: "Pulastya", kn: "ಪುಲಸ್ತ್ಯ" },
+    { en: "Pulaha", kn: "ಪುಲಹ" },
+    { en: "Kratu", kn: "ಕ್ರತು" },
+    { en: "Marichi", kn: "ಮರೀಚಿ" },
+    { en: "Shandilya", kn: "ಶಾಂಡಿಲ್ಯ" },
+    { en: "Kaundinya", kn: "ಕೌಂಡಿನ್ಯ" },
+    { en: "Harita", kn: "ಹರೀತ" },
+    { en: "Kaushika", kn: "ಕೌಶಿಕ" },
+    { en: "Srivatsa", kn: "ಶ್ರೀವತ್ಸ" },
+    { en: "Maudgalya", kn: "ಮೌದ್ಗಲ್ಯ" },
+    { en: "Other / Not listed", kn: "ಇತರೆ / ಪಟ್ಟಿಯಲ್ಲಿಲ್ಲ" },
+  ];
+
+  const RASHIS = [
+    { en: "Mesha (Aries)", kn: "ಮೇಷ" },
+    { en: "Vrishabha (Taurus)", kn: "ವೃಷಭ" },
+    { en: "Mithuna (Gemini)", kn: "ಮಿಥುನ" },
+    { en: "Karka (Cancer)", kn: "ಕರ್ಕಾಟಕ" },
+    { en: "Simha (Leo)", kn: "ಸಿಂಹ" },
+    { en: "Kanya (Virgo)", kn: "ಕನ್ಯಾ" },
+    { en: "Tula (Libra)", kn: "ತುಲಾ" },
+    { en: "Vrischika (Scorpio)", kn: "ವೃಶ್ಚಿಕ" },
+    { en: "Dhanu (Sagittarius)", kn: "ಧನು" },
+    { en: "Makara (Capricorn)", kn: "ಮಕರ" },
+    { en: "Kumbha (Aquarius)", kn: "ಕುಂಭ" },
+    { en: "Meena (Pisces)", kn: "ಮೀನ" },
+  ];
+
+  const NAKSHATRAS = [
+    { en: "Ashwini", kn: "ಅಶ್ವಿನಿ" },
+    { en: "Bharani", kn: "ಭರಣಿ" },
+    { en: "Krittika", kn: "ಕೃತ್ತಿಕಾ" },
+    { en: "Rohini", kn: "ರೋಹಿಣಿ" },
+    { en: "Mrigashira", kn: "ಮೃಗಶಿರ" },
+    { en: "Ardra", kn: "ಆರ್ದ್ರಾ" },
+    { en: "Punarvasu", kn: "ಪುನರ್ವಸು" },
+    { en: "Pushya", kn: "ಪುಷ್ಯ" },
+    { en: "Ashlesha", kn: "ಆಶ್ಲೇಷಾ" },
+    { en: "Magha", kn: "ಮಘಾ" },
+    { en: "Purva Phalguni", kn: "ಪೂರ್ವ ಫಲ್ಗುಣಿ" },
+    { en: "Uttara Phalguni", kn: "ಉತ್ತರ ಫಲ್ಗುಣಿ" },
+    { en: "Hasta", kn: "ಹಸ್ತ" },
+    { en: "Chitra", kn: "ಚಿತ್ರಾ" },
+    { en: "Swati", kn: "ಸ್ವಾತಿ" },
+    { en: "Vishakha", kn: "ವಿಶಾಖಾ" },
+    { en: "Anuradha", kn: "ಅನುರಾಧಾ" },
+    { en: "Jyeshtha", kn: "ಜ್ಯೇಷ್ಠಾ" },
+    { en: "Mula", kn: "ಮೂಲಾ" },
+    { en: "Purva Ashadha", kn: "ಪೂರ್ವಾಷಾಢಾ" },
+    { en: "Uttara Ashadha", kn: "ಉತ್ತರಾಷಾಢಾ" },
+    { en: "Shravana", kn: "ಶ್ರವಣ" },
+    { en: "Dhanishta", kn: "ಧನಿಷ್ಠಾ" },
+    { en: "Shatabhisha", kn: "ಶತಭಿಷಾ" },
+    { en: "Purva Bhadrapada", kn: "ಪೂರ್ವ ಭಾದ್ರಪದಾ" },
+    { en: "Uttara Bhadrapada", kn: "ಉತ್ತರ ಭಾದ್ರಪದಾ" },
+    { en: "Revati", kn: "ರೇವತಿ" },
+  ];
+
   const translations = {
     en: {
       navBrand: "Sri Durgadevi Temple",
@@ -187,7 +256,9 @@
         "Offer sankalpa in your family’s name. Pay with free UPI QR, then submit. WhatsApp welcome is sent next.",
       labelName: "Devotee Name",
       labelGotra: "Gotra",
+      labelRashi: "Rashi",
       labelNakshatra: "Nakshatra",
+      selectPlaceholder: "Select",
       labelMobile: "Mobile Number",
       labelAddress: "Address",
       labelSeva: "Seva Selection",
@@ -395,7 +466,9 @@
         "ನಿಮ್ಮ ಕುಟುಂಬದ ಹೆಸರಿನಲ್ಲಿ ಸಂಕಲ್ಪ ಮಾಡಿ. ಉಚಿತ UPI QR ಮೂಲಕ ಪಾವತಿಸಿ, ನಂತರ ಸಲ್ಲಿಸಿ. WhatsApp ಸ್ವಾಗತ ಮುಂದೆ.",
       labelName: "ಭಕ್ತರ ಹೆಸರು",
       labelGotra: "ಗೋತ್ರ",
+      labelRashi: "ರಾಶಿ",
       labelNakshatra: "ನಕ್ಷತ್ರ",
+      selectPlaceholder: "ಆಯ್ಕೆ ಮಾಡಿ",
       labelMobile: "ಮೊಬೈಲ್ ಸಂಖ್ಯೆ",
       labelAddress: "ವಿಳಾಸ",
       labelSeva: "ಸೇವೆ ಆಯ್ಕೆ",
@@ -489,6 +562,39 @@
     currentLang = lang;
     localStorage.setItem("durga-lang", lang);
     updateCountdownLabel();
+    fillAstroSelects();
+  }
+
+  function fillAstroSelects() {
+    const dict = translations[currentLang] || translations.en;
+    const langKey = currentLang === "kn" ? "kn" : "en";
+
+    const fill = (selectId, items) => {
+      const el = document.getElementById(selectId);
+      if (!el) return;
+      const prev = el.value;
+      el.innerHTML = "";
+      const placeholder = document.createElement("option");
+      placeholder.value = "";
+      placeholder.disabled = true;
+      placeholder.selected = !prev;
+      placeholder.textContent = dict.selectPlaceholder || "Select";
+      el.appendChild(placeholder);
+      items.forEach((item) => {
+        const opt = document.createElement("option");
+        opt.value = item.en;
+        opt.textContent = item[langKey] || item.en;
+        el.appendChild(opt);
+      });
+      if (prev && [...el.options].some((o) => o.value === prev)) {
+        el.value = prev;
+        placeholder.selected = false;
+      }
+    };
+
+    fill("gotra-select", GOTRAS);
+    fill("rashi-select", RASHIS);
+    fill("nakshatra-select", NAKSHATRAS);
   }
 
   function pad(n) {
@@ -644,6 +750,7 @@
       "S.No": i + 1,
       Name: r.name || "",
       Gotra: r.gotra || "",
+      Rashi: r.rashi || "",
       Nakshatra: r.nakshatra || "",
       Mobile: r.mobile || "",
       Address: r.address || "",
@@ -767,6 +874,7 @@
       `New Navaratri Seva Registration\n\n` +
       `Name: ${data.name}\n` +
       `Gotra: ${data.gotra}\n` +
+      `Rashi: ${data.rashi || "-"}\n` +
       `Nakshatra: ${data.nakshatra}\n` +
       `Mobile: ${data.mobile}\n` +
       `Address: ${data.address}\n` +
@@ -808,11 +916,13 @@
       const single = form.querySelector('input[name="seva"][value="single"]');
       const show = Boolean(single && single.checked);
       if (!daySelect) return;
+      daySelect.classList.toggle("is-open", show);
       daySelect.hidden = !show;
       const select = daySelect.querySelector("select");
       if (select) {
         select.disabled = !show;
         select.required = show;
+        if (!show) select.value = "1";
       }
     };
 
@@ -823,20 +933,19 @@
 
     form.querySelectorAll('input[name="seva"]').forEach((input) => {
       input.addEventListener("change", refreshQr);
+      input.addEventListener("click", refreshQr);
     });
+    form.querySelector(".seva-options")?.addEventListener("change", refreshQr);
+
     if (form.elements.name) {
       form.elements.name.addEventListener("input", () => updatePaymentQr(form));
     }
-
-    const excelBtn = document.getElementById("excel-download-btn");
-    const excelAdmin = document.getElementById("excel-admin-btn");
-    if (excelBtn) excelBtn.addEventListener("click", downloadExcel);
-    if (excelAdmin) excelAdmin.addEventListener("click", downloadExcel);
 
     // Wait briefly for CDN QRCode if deferred
     const bootQr = () => updatePaymentQr(form);
     if (typeof QRCode !== "undefined") bootQr();
     else setTimeout(bootQr, 400);
+    fillAstroSelects();
     syncDayVisibility();
 
     form.addEventListener("submit", (event) => {
