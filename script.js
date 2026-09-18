@@ -4,6 +4,42 @@
   /** Sharad Navaratri 2026 — Ashwin Shukla Pratipada (update if temple calendar differs) */
   const NAVARATRI_START = new Date("2026-10-11T06:00:00+05:30");
 
+  /** Free setup — edit these only */
+  const CONFIG = {
+    templeWhatsApp: "917892655210",
+    /** Change to your real UPI ID (PhonePe/GPay/Paytm), e.g. 7892655210@ybl */
+    upiId: "7892655210@ybl",
+    payeeName: "Sri Durgadevi Temple Hirekerur",
+    sevaAmounts: {
+      full9: 1101,
+      single: 501,
+      annadana: 1001,
+      kumkum: 251,
+    },
+    /**
+     * Optional free Google Sheet (all devices can share one sheet):
+     * 1) Create a Google Sheet
+     * 2) Extensions → Apps Script → paste google-apps-script.gs → Deploy as Web app
+     * 3) Paste the Web App URL here
+     */
+    googleScriptUrl: "",
+  };
+
+  const SEVA_LABELS = {
+    en: {
+      full9: "Full 9-day Homa Sankalpa",
+      single: "Single Day Homa",
+      annadana: "Annadana Seva",
+      kumkum: "Kumkumarchana",
+    },
+    kn: {
+      full9: "ಪೂರ್ಣ 9-ದಿನ ಹೋಮ ಸಂಕಲ್ಪ",
+      single: "ಒಂದು ದಿನದ ಹೋಮ",
+      annadana: "ಅನ್ನದಾನ ಸೇವೆ",
+      kumkum: "ಕುಂಕುಮಾರ್ಚನೆ",
+    },
+  };
+
   const translations = {
     en: {
       navBrand: "Sri Durgadevi Temple",
@@ -145,7 +181,7 @@
       sevaEyebrow: "Seva Booking",
       sevaTitle: "Register for Navaratri Homa Seva",
       sevaLead:
-        "Offer sankalpa in your family’s name. Complete the form and confirm payment via UPI.",
+        "Offer sankalpa in your family’s name. Pay with free UPI QR, then submit. WhatsApp welcome is sent next.",
       labelName: "Devotee Name",
       labelGotra: "Gotra",
       labelNakshatra: "Nakshatra",
@@ -168,15 +204,24 @@
       optDay9: "Day 9 — Vijayadashami Poornahuti",
       payTitle: "UPI / QR Payment",
       payNote:
-        "Scan the QR code or pay to the temple UPI ID, then enter the transaction reference below.",
-      qrLabel: "QR Placeholder",
+        "Scan the auto-generated QR (free UPI), pay the seva amount, then submit. Optional: add UTR after payment.",
+      qrLabel: "Scan to pay (UPI)",
       upiLabel: "UPI ID:",
-      upiHint: "Replace with temple committee UPI before go-live.",
-      labelTxn: "Transaction / UTR Reference",
+      upiHint: "Free QR updates when you change seva. Edit UPI ID in script.js if needed.",
+      labelAmount: "Seva Amount:",
+      labelTxn: "Transaction / UTR (optional)",
       submitBtn: "Submit Seva Registration",
       formSuccess:
-        "Thank you. Your seva registration has been recorded locally. The temple committee will confirm after verifying payment.",
+        "Thank you. Registration saved. Use WhatsApp buttons below for welcome message and temple notify. Download Excel anytime.",
       formError: "Please fill all required fields with valid details.",
+      afterTitle: "Registration saved — next steps (all free)",
+      afterLead:
+        "Your details are stored. Pay via QR if pending, then use WhatsApp to send welcome / notify the temple.",
+      excelBtn: "Download Excel (all members)",
+      excelAdminBtn: "Download member Excel sheet",
+      excelNote: "Free: all registrations saved in this browser / download as Excel anytime.",
+      waWelcomeBtn: "WhatsApp Welcome",
+      waTempleBtn: "Notify Temple WhatsApp",
       darshanEyebrow: "Temple Gallery",
       darshanTitle: "Witness Devi’s Alankara from afar",
       darshanLead:
@@ -190,10 +235,9 @@
       visitAddress:
         "Sri Durgadevi Temple<br />Temple Road, Hirekerur<br />Haveri District, Karnataka 581111",
       contactCommittee: "Temple Committee",
-      contactSeva: "Seva Desk",
+      contactSeva: "Seva Desk / WhatsApp",
       contactEmail: "Email",
-      visitNote:
-        "Contact numbers are placeholders — update with official committee phones before publishing.",
+      visitNote: "WhatsApp seva desk: +91 78926 55210",
       footerBlessing: "Om Dum Durgayei Namaha",
       footerCopy: "© 2026 Sri Durgadevi Temple, Hirekerur. All rights reserved.",
       backTop: "Back to top",
@@ -338,7 +382,7 @@
       sevaEyebrow: "ಸೇವಾ ನೋಂದಣಿ",
       sevaTitle: "ನವರಾತ್ರಿ ಹೋಮ ಸೇವೆಗೆ ನೋಂದಾಯಿಸಿ",
       sevaLead:
-        "ನಿಮ್ಮ ಕುಟುಂಬದ ಹೆಸರಿನಲ್ಲಿ ಸಂಕಲ್ಪ ಮಾಡಿ. ನಮೂನೆ ತುಂಬಿ UPI ಮೂಲಕ ಪಾವತಿ ದೃಢಪಡಿಸಿ.",
+        "ನಿಮ್ಮ ಕುಟುಂಬದ ಹೆಸರಿನಲ್ಲಿ ಸಂಕಲ್ಪ ಮಾಡಿ. ಉಚಿತ UPI QR ಮೂಲಕ ಪಾವತಿಸಿ, ನಂತರ ಸಲ್ಲಿಸಿ. WhatsApp ಸ್ವಾಗತ ಮುಂದೆ.",
       labelName: "ಭಕ್ತರ ಹೆಸರು",
       labelGotra: "ಗೋತ್ರ",
       labelNakshatra: "ನಕ್ಷತ್ರ",
@@ -361,15 +405,24 @@
       optDay9: "ದಿನ 9 — ವಿಜಯದಶಮಿ ಪೂರ್ಣಾಹುತಿ",
       payTitle: "UPI / QR ಪಾವತಿ",
       payNote:
-        "QR ಕೋಡ್ ಸ್ಕ್ಯಾನ್ ಮಾಡಿ ಅಥವಾ ದೇವಸ್ಥಾನ UPI IDಗೆ ಪಾವತಿಸಿ, ನಂತರ ವಹಿವಾಟು ಉಲ್ಲೇಖ ನಮೂದಿಸಿ.",
-      qrLabel: "QR ಸ್ಥಾನಧಾರಿ",
+        "ಉಚಿತ UPI QR ಸ್ಕ್ಯಾನ್ ಮಾಡಿ ಪಾವತಿಸಿ, ನಂತರ ಸಲ್ಲಿಸಿ. ಪಾವತಿಯ ನಂತರ UTR ಐಚ್ಛಿಕ.",
+      qrLabel: "ಪಾವತಿಸಲು ಸ್ಕ್ಯಾನ್ ಮಾಡಿ (UPI)",
       upiLabel: "UPI ID:",
-      upiHint: "ಪ್ರಕಟಣೆಗೆ ಮುನ್ನ ಅಧಿಕೃತ ಸಮಿತಿ UPI ಬದಲಾಯಿಸಿ.",
-      labelTxn: "ವಹಿವಾಟು / UTR ಉಲ್ಲೇಖ",
+      upiHint: "ಸೇವೆ ಬದಲಾದಾಗ QR ಅಪ್‌ಡೇಟ್ ಆಗುತ್ತದೆ. UPI ID script.js ನಲ್ಲಿ ಬದಲಾಯಿಸಿ.",
+      labelAmount: "ಸೇವಾ ಮೊತ್ತ:",
+      labelTxn: "ವಹಿವಾಟು / UTR (ಐಚ್ಛಿಕ)",
       submitBtn: "ಸೇವಾ ನೋಂದಣಿ ಸಲ್ಲಿಸಿ",
       formSuccess:
-        "ಧನ್ಯವಾದಗಳು. ನಿಮ್ಮ ಸೇವಾ ನೋಂದಣಿ ಸ್ಥಳೀಯವಾಗಿ ದಾಖಲಾಗಿದೆ. ಪಾವತಿ ಪರಿಶೀಲನೆಯ ನಂತರ ಸಮಿತಿ ದೃಢಪಡಿಸುತ್ತದೆ.",
+        "ಧನ್ಯವಾದಗಳು. ನೋಂದಣಿ ಉಳಿಸಲಾಗಿದೆ. ಕೆಳಗಿನ WhatsApp ಬಟನ್‌ಗಳು ಮತ್ತು Excel ಡೌನ್‌ಲೋಡ್ ಬಳಸಿ.",
       formError: "ದಯವಿಟ್ಟು ಎಲ್ಲಾ ಅಗತ್ಯ ಕ್ಷೇತ್ರಗಳನ್ನು ಸರಿಯಾಗಿ ತುಂಬಿ.",
+      afterTitle: "ನೋಂದಣಿ ಉಳಿಸಲಾಗಿದೆ — ಮುಂದಿನ ಹಂತಗಳು (ಉಚಿತ)",
+      afterLead:
+        "ನಿಮ್ಮ ವಿವರಗಳು ಉಳಿಸಲಾಗಿವೆ. ಬಾಕಿ ಇದ್ದರೆ QR ಮೂಲಕ ಪಾವತಿಸಿ, ನಂತರ WhatsApp ಸ್ವಾಗತ / ದೇವಸ್ಥಾನಕ್ಕೆ ಸಂದೇಶ ಕಳುಹಿಸಿ.",
+      excelBtn: "Excel ಡೌನ್‌ಲೋಡ್ (ಎಲ್ಲಾ ಸದಸ್ಯರು)",
+      excelAdminBtn: "ಸದಸ್ಯರ Excel ಶೀಟ್ ಡೌನ್‌ಲೋಡ್",
+      excelNote: "ಉಚಿತ: ಎಲ್ಲಾ ನೋಂದಣಿಗಳು ಈ ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಉಳಿಯುತ್ತವೆ / Excel ಡೌನ್‌ಲೋಡ್.",
+      waWelcomeBtn: "WhatsApp ಸ್ವಾಗತ",
+      waTempleBtn: "ದೇವಸ್ಥಾನ WhatsApp ಗೆ ತಿಳಿಸಿ",
       darshanEyebrow: "ದೇವಸ್ಥಾನ ಗ್ಯಾಲರಿ",
       darshanTitle: "ದೂರದಿಂದಲೇ ದೇವಿಯ ಅಲಂಕಾರ ನೋಡಿ",
       darshanLead:
@@ -383,10 +436,9 @@
       visitAddress:
         "ಶ್ರೀ ದುರ್ಗಾದೇವಿ ದೇವಸ್ಥಾನ<br />ಟೆಂಪಲ್ ರೋಡ್, ಹಿರೇಕೆರೂರು<br />ಹಾವೇರಿ ಜಿಲ್ಲೆ, ಕರ್ನಾಟಕ 581111",
       contactCommittee: "ದೇವಸ್ಥಾನ ಸಮಿತಿ",
-      contactSeva: "ಸೇವಾ ವಿಭಾಗ",
+      contactSeva: "ಸೇವಾ ವಿಭಾಗ / WhatsApp",
       contactEmail: "ಇಮೇಲ್",
-      visitNote:
-        "ಸಂಪರ್ಕ ಸಂಖ್ಯೆಗಳು ಸ್ಥಾನಧಾರಿ — ಪ್ರಕಟಣೆಗೆ ಮುನ್ನ ಅಧಿಕೃತ ಸಂಖ್ಯೆಗಳನ್ನು ನವೀಕರಿಸಿ.",
+      visitNote: "WhatsApp ಸೇವಾ ವಿಭಾಗ: +91 78926 55210",
       footerBlessing: "ಓಂ ದುಂ ದುರ್ಗಾಯೈ ನಮಃ",
       footerCopy: "© 2026 ಶ್ರೀ ದುರ್ಗಾದೇವಿ ದೇವಸ್ಥಾನ, ಹಿರೇಕೆರೂರು. ಎಲ್ಲಾ ಹಕ್ಕುಗಳನ್ನು ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ.",
       backTop: "ಮೇಲಕ್ಕೆ ಹೋಗಿ",
@@ -493,11 +545,169 @@
     });
   }
 
+  function getSelectedSeva(form) {
+    const checked = form.querySelector('input[name="seva"]:checked');
+    return checked ? checked.value : "full9";
+  }
+
+  function getSevaAmount(sevaKey) {
+    return CONFIG.sevaAmounts[sevaKey] || CONFIG.sevaAmounts.full9;
+  }
+
+  function buildUpiLink(amount, note) {
+    const params = new URLSearchParams({
+      pa: CONFIG.upiId,
+      pn: CONFIG.payeeName,
+      am: String(amount),
+      cu: "INR",
+      tn: note.slice(0, 80),
+    });
+    return `upi://pay?${params.toString()}`;
+  }
+
+  function updatePaymentQr(form) {
+    const canvas = document.getElementById("upi-qr");
+    const amountEl = document.getElementById("qr-amount");
+    const amountText = document.getElementById("seva-amount-text");
+    const upiText = document.getElementById("upi-id-text");
+    if (!canvas || typeof QRCode === "undefined") return;
+
+    const seva = getSelectedSeva(form);
+    const amount = getSevaAmount(seva);
+    const name = (form.elements.name && form.elements.name.value) || "Devotee";
+    const note = `Navaratri ${seva} - ${name}`;
+    const upi = buildUpiLink(amount, note);
+
+    if (upiText) upiText.textContent = CONFIG.upiId;
+    if (amountEl) amountEl.textContent = `₹${amount}`;
+    if (amountText) amountText.textContent = `₹${amount}`;
+
+    QRCode.toCanvas(
+      canvas,
+      upi,
+      {
+        width: 180,
+        margin: 1,
+        color: { dark: "#1a070c", light: "#f8f0e3" },
+      },
+      () => {}
+    );
+  }
+
+  function loadRegistrations() {
+    try {
+      return JSON.parse(localStorage.getItem("durga-seva") || "[]");
+    } catch {
+      return [];
+    }
+  }
+
+  function saveRegistrations(list) {
+    localStorage.setItem("durga-seva", JSON.stringify(list));
+  }
+
+  function downloadExcel() {
+    if (typeof XLSX === "undefined") {
+      alert("Excel library still loading. Please try again in a second.");
+      return;
+    }
+    const rows = loadRegistrations();
+    if (!rows.length) {
+      alert(currentLang === "kn" ? "ಇನ್ನೂ ನೋಂದಣಿಗಳಿಲ್ಲ." : "No registrations yet.");
+      return;
+    }
+
+    const sheetRows = rows.map((r, i) => ({
+      "S.No": i + 1,
+      Name: r.name || "",
+      Gotra: r.gotra || "",
+      Nakshatra: r.nakshatra || "",
+      Mobile: r.mobile || "",
+      Address: r.address || "",
+      Seva: r.seva || "",
+      Day: r.day || "",
+      Amount: r.amount || "",
+      UTR: r.txn || "",
+      Language: r.lang || "",
+      SubmittedAt: r.submittedAt || "",
+    }));
+
+    const sheet = XLSX.utils.json_to_sheet(sheetRows);
+    const book = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(book, sheet, "Registrations");
+    XLSX.writeFile(book, `durgadevi-navaratri-seva-${new Date().toISOString().slice(0, 10)}.xlsx`);
+  }
+
+  function welcomeMessage(data) {
+    const sevaName =
+      (SEVA_LABELS[currentLang] && SEVA_LABELS[currentLang][data.seva]) || data.seva;
+    if (currentLang === "kn") {
+      return (
+        `ॐ ಶ್ರೀ ದುರ್ಗಾದೇವಿ ದೇವಸ್ಥಾನ, ಹಿರೇಕೆರೂರು\n\n` +
+        `ನಮಸ್ಕಾರ ${data.name} ಜೀ,\n` +
+        `ನಿಮ್ಮ ನವರಾತ್ರಿ ಸೇವಾ ನೋಂದಣಿಗೆ ಸ್ವಾಗತ.\n\n` +
+        `ಸೇವೆ: ${sevaName}\n` +
+        `ಮೊತ್ತ: ₹${data.amount}\n` +
+        `ಮೊಬೈಲ್: ${data.mobile}\n\n` +
+        `ದೇವಿಯ ಆಶೀರ್ವಾದ ಸದಾ ಇರಲಿ.\n` +
+        `ಸಂಪರ್ಕ: +91 78926 55210`
+      );
+    }
+    return (
+      `Om — Sri Durgadevi Temple, Hirekerur\n\n` +
+      `Namaskara ${data.name},\n` +
+      `Welcome — your Navaratri seva registration is received.\n\n` +
+      `Seva: ${sevaName}\n` +
+      `Amount: ₹${data.amount}\n` +
+      `Mobile: ${data.mobile}\n\n` +
+      `May Devi bless you.\n` +
+      `Contact: +91 78926 55210`
+    );
+  }
+
+  function templeNotifyMessage(data) {
+    const sevaName =
+      (SEVA_LABELS.en && SEVA_LABELS.en[data.seva]) || data.seva;
+    return (
+      `New Navaratri Seva Registration\n\n` +
+      `Name: ${data.name}\n` +
+      `Gotra: ${data.gotra}\n` +
+      `Nakshatra: ${data.nakshatra}\n` +
+      `Mobile: ${data.mobile}\n` +
+      `Address: ${data.address}\n` +
+      `Seva: ${sevaName}\n` +
+      `Day: ${data.day || "-"}\n` +
+      `Amount: ₹${data.amount}\n` +
+      `UTR: ${data.txn || "pending"}\n` +
+      `Time: ${data.submittedAt}`
+    );
+  }
+
+  function waLink(phoneDigits, text) {
+    const clean = String(phoneDigits).replace(/\D/g, "");
+    const withCountry = clean.length === 10 ? `91${clean}` : clean;
+    return `https://wa.me/${withCountry}?text=${encodeURIComponent(text)}`;
+  }
+
+  function postToGoogleSheet(data) {
+    if (!CONFIG.googleScriptUrl) return;
+    fetch(CONFIG.googleScriptUrl, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(data),
+    }).catch(() => {});
+  }
+
   function setupSevaForm() {
     const form = document.getElementById("seva-form");
     const daySelect = document.querySelector("[data-day-select]");
     const status = document.getElementById("form-status");
+    const after = document.getElementById("after-submit");
     if (!form) return;
+
+    const upiText = document.getElementById("upi-id-text");
+    if (upiText) upiText.textContent = CONFIG.upiId;
 
     const syncDayVisibility = () => {
       const single = form.querySelector('input[name="seva"][value="single"]');
@@ -511,9 +721,27 @@
       }
     };
 
+    const refreshQr = () => {
+      syncDayVisibility();
+      updatePaymentQr(form);
+    };
+
     form.querySelectorAll('input[name="seva"]').forEach((input) => {
-      input.addEventListener("change", syncDayVisibility);
+      input.addEventListener("change", refreshQr);
     });
+    if (form.elements.name) {
+      form.elements.name.addEventListener("input", () => updatePaymentQr(form));
+    }
+
+    const excelBtn = document.getElementById("excel-download-btn");
+    const excelAdmin = document.getElementById("excel-admin-btn");
+    if (excelBtn) excelBtn.addEventListener("click", downloadExcel);
+    if (excelAdmin) excelAdmin.addEventListener("click", downloadExcel);
+
+    // Wait briefly for CDN QRCode if deferred
+    const bootQr = () => updatePaymentQr(form);
+    if (typeof QRCode !== "undefined") bootQr();
+    else setTimeout(bootQr, 400);
     syncDayVisibility();
 
     form.addEventListener("submit", (event) => {
@@ -528,16 +756,48 @@
         return;
       }
 
-      const data = Object.fromEntries(new FormData(form).entries());
-      const submissions = JSON.parse(localStorage.getItem("durga-seva") || "[]");
-      submissions.push({ ...data, submittedAt: new Date().toISOString(), lang: currentLang });
-      localStorage.setItem("durga-seva", JSON.stringify(submissions));
+      const raw = Object.fromEntries(new FormData(form).entries());
+      const seva = raw.seva || "full9";
+      const amount = getSevaAmount(seva);
+      const data = {
+        ...raw,
+        amount,
+        upiId: CONFIG.upiId,
+        submittedAt: new Date().toISOString(),
+        lang: currentLang,
+      };
+
+      const submissions = loadRegistrations();
+      submissions.push(data);
+      saveRegistrations(submissions);
+      postToGoogleSheet(data);
+
+      const welcome = welcomeMessage(data);
+      const notify = templeNotifyMessage(data);
+      const waWelcome = document.getElementById("wa-welcome-btn");
+      const waTemple = document.getElementById("wa-temple-btn");
+
+      if (waWelcome) {
+        waWelcome.href = waLink(data.mobile, welcome);
+        waWelcome.textContent = dict.waWelcomeBtn;
+      }
+      if (waTemple) {
+        waTemple.href = waLink(CONFIG.templeWhatsApp, notify);
+        waTemple.textContent = dict.waTempleBtn;
+      }
 
       status.hidden = false;
       status.classList.remove("is-error");
       status.textContent = dict.formSuccess;
+      if (after) after.hidden = false;
+
+      // Open welcome WhatsApp to the registered member (free wa.me)
+      window.open(waLink(data.mobile, welcome), "_blank", "noopener");
+
       form.reset();
       syncDayVisibility();
+      updatePaymentQr(form);
+      after?.scrollIntoView({ behavior: "smooth", block: "nearest" });
     });
   }
 

@@ -370,35 +370,20 @@
 
           <div class="payment-block">
             <h3 data-i18n="payTitle">UPI / QR Payment</h3>
-            <p data-i18n="payNote">Scan the QR code or pay to the temple UPI ID, then enter the transaction reference below.</p>
+            <p data-i18n="payNote">Scan the auto-generated QR (free UPI), pay the seva amount, then submit. Optional: add UTR after payment.</p>
             <div class="payment-row">
-              <div class="qr-placeholder" role="img" aria-label="UPI QR code placeholder">
-                <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                  <rect width="160" height="160" fill="#1a0a0e"/>
-                  <rect x="12" y="12" width="40" height="40" fill="#d4a017"/>
-                  <rect x="20" y="20" width="24" height="24" fill="#1a0a0e"/>
-                  <rect x="108" y="12" width="40" height="40" fill="#d4a017"/>
-                  <rect x="116" y="20" width="24" height="24" fill="#1a0a0e"/>
-                  <rect x="12" y="108" width="40" height="40" fill="#d4a017"/>
-                  <rect x="20" y="116" width="24" height="24" fill="#1a0a0e"/>
-                  <rect x="64" y="64" width="12" height="12" fill="#f5d76e"/>
-                  <rect x="84" y="64" width="12" height="12" fill="#d4a017"/>
-                  <rect x="64" y="84" width="12" height="12" fill="#d4a017"/>
-                  <rect x="84" y="84" width="12" height="12" fill="#f5d76e"/>
-                  <rect x="108" y="84" width="8" height="8" fill="#d4a017"/>
-                  <rect x="124" y="100" width="8" height="8" fill="#f5d76e"/>
-                  <rect x="140" y="116" width="8" height="8" fill="#d4a017"/>
-                  <rect x="100" y="124" width="16" height="8" fill="#d4a017"/>
-                  <rect x="72" y="108" width="8" height="24" fill="#f5d76e"/>
-                </svg>
-                <span data-i18n="qrLabel">QR Placeholder</span>
+              <div class="qr-box">
+                <canvas id="upi-qr" width="180" height="180" aria-label="UPI payment QR"></canvas>
+                <span class="qr-amount" id="qr-amount">₹1101</span>
+                <span data-i18n="qrLabel">Scan to pay (UPI)</span>
               </div>
               <div class="upi-details">
-                <p class="upi-id"><span data-i18n="upiLabel">UPI ID:</span> <code>durgadevi.hirekerur@upi</code></p>
-                <p class="upi-hint" data-i18n="upiHint">Replace with temple committee UPI before go-live.</p>
+                <p class="upi-id"><span data-i18n="upiLabel">UPI ID:</span> <code id="upi-id-text">7892655210@ybl</code></p>
+                <p class="upi-hint" data-i18n="upiHint">Free QR updates when you change seva. Edit UPI ID in script.js if needed.</p>
+                <p class="pay-amount-line"><span data-i18n="labelAmount">Seva Amount:</span> <strong id="seva-amount-text">₹1101</strong></p>
                 <label>
-                  <span data-i18n="labelTxn">Transaction / UTR Reference</span>
-                  <input type="text" name="txn" required placeholder="e.g. 312345678901" />
+                  <span data-i18n="labelTxn">Transaction / UTR (optional)</span>
+                  <input type="text" name="txn" placeholder="e.g. 312345678901" />
                 </label>
               </div>
             </div>
@@ -409,6 +394,16 @@
             <p class="form-status" id="form-status" role="status" hidden></p>
           </div>
         </form>
+
+        <div class="after-submit" id="after-submit" hidden>
+          <h3 data-i18n="afterTitle">Registration saved — next steps (all free)</h3>
+          <p id="after-message" data-i18n="afterLead">Your details are stored. Pay via QR if pending, then use WhatsApp to send welcome / notify the temple.</p>
+          <div class="after-actions">
+            <a class="btn btn-primary" id="wa-welcome-btn" target="_blank" rel="noopener">WhatsApp Welcome</a>
+            <a class="btn btn-ghost" id="wa-temple-btn" target="_blank" rel="noopener">Notify Temple WhatsApp</a>
+            <button type="button" class="btn btn-ghost" id="excel-download-btn" data-i18n="excelBtn">Download Excel (all members)</button>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -490,19 +485,23 @@
           <ul class="contact-list">
             <li>
               <span data-i18n="contactCommittee">Temple Committee</span>
-              <a href="tel:+918762543210">+91 87625 43210</a>
+              <a href="tel:+917892655210">+91 78926 55210</a>
             </li>
             <li>
-              <span data-i18n="contactSeva">Seva Desk</span>
-              <a href="tel:+919845612345">+91 98456 12345</a>
+              <span data-i18n="contactSeva">Seva Desk / WhatsApp</span>
+              <a href="https://wa.me/917892655210" target="_blank" rel="noopener">+91 78926 55210</a>
             </li>
             <li>
               <span data-i18n="contactEmail">Email</span>
               <a href="mailto:seva@sridurgadevihirekerur.org">seva@sridurgadevihirekerur.org</a>
             </li>
           </ul>
+          <div class="admin-excel">
+            <button type="button" class="btn btn-ghost" id="excel-admin-btn" data-i18n="excelAdminBtn">Download member Excel sheet</button>
+            <p class="visit-note" data-i18n="excelNote">Free: all registrations saved in this browser / download as Excel anytime.</p>
+          </div>
           <p class="visit-note" data-i18n="visitNote">
-            Contact numbers are placeholders — update with official committee phones before publishing.
+            WhatsApp seva desk: +91 78926 55210
           </p>
         </div>
         <div class="map-wrap">
@@ -526,6 +525,8 @@
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js" defer></script>
+  <script src="script.js" defer></script>
 </body>
 </html>

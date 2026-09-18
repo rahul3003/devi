@@ -791,29 +791,80 @@ ul, ol {
 
 @media (min-width: 560px) {
   .payment-row {
-    grid-template-columns: 160px 1fr;
+    grid-template-columns: 180px 1fr;
     align-items: start;
   }
 }
 
-.qr-placeholder {
-  width: 160px;
+.qr-box {
+  width: 180px;
   text-align: center;
 }
 
-.qr-placeholder svg {
-  width: 160px;
-  height: 160px;
+.qr-box canvas {
+  display: block;
+  width: 180px;
+  height: 180px;
   border: 1px solid var(--line);
+  background: var(--cream);
 }
 
-.qr-placeholder span {
+.qr-box span,
+.qr-amount {
   display: block;
   margin-top: 0.4rem;
   font-size: 0.75rem;
   color: var(--cream-muted);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.qr-amount {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--gold-400);
+  letter-spacing: 0;
+}
+
+.pay-amount-line {
+  color: var(--cream);
+  font-size: 0.98rem;
+}
+
+.pay-amount-line strong {
+  color: var(--gold-400);
+}
+
+.after-submit {
+  margin-top: 2rem;
+  padding: 1.35rem 1.25rem;
+  border: 1px solid rgba(212, 160, 23, 0.4);
+  background: linear-gradient(135deg, rgba(212, 160, 23, 0.1), transparent 60%);
+}
+
+.after-submit h3 {
+  font-size: 1.35rem;
+  color: var(--cream);
+  margin-bottom: 0.5rem;
+}
+
+.after-submit > p {
+  color: var(--cream-muted);
+  margin-bottom: 1.1rem;
+}
+
+.after-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.admin-excel {
+  margin: 1.25rem 0 0.75rem;
+}
+
+.admin-excel .btn {
+  margin-bottom: 0.5rem;
 }
 
 .upi-id {
