@@ -153,10 +153,7 @@
       visitTitle: "Plan your yatra to Hirekerur",
       visitAddress:
         "Sri Durgadevi Temple<br />Temple Road, Hirekerur<br />Haveri District, Karnataka 581111",
-      contactCommittee: "Temple Committee",
-      contactSeva: "WhatsApp",
       contactEmail: "Email",
-      visitNote: "WhatsApp: +91 78926 55210",
       footerBlessing: "Om Dum Durgayei Namaha",
       footerCopy: "© 2026 Sri Durgadevi Temple, Hirekerur. All rights reserved.",
       backTop: "Back to top",
@@ -308,10 +305,7 @@
       visitTitle: "ಹಿರೇಕೆರೂರಿಗೆ ನಿಮ್ಮ ಯಾತ್ರೆ ಯೋಜಿಸಿ",
       visitAddress:
         "ಶ್ರೀ ದುರ್ಗಾದೇವಿ ದೇವಸ್ಥಾನ<br />ಟೆಂಪಲ್ ರೋಡ್, ಹಿರೇಕೆರೂರು<br />ಹಾವೇರಿ ಜಿಲ್ಲೆ, ಕರ್ನಾಟಕ 581111",
-      contactCommittee: "ದೇವಸ್ಥಾನ ಸಮಿತಿ",
-      contactSeva: "WhatsApp",
       contactEmail: "ಇಮೇಲ್",
-      visitNote: "WhatsApp: +91 78926 55210",
       footerBlessing: "ಓಂ ದುಂ ದುರ್ಗಾಯೈ ನಮಃ",
       footerCopy: "© 2026 ಶ್ರೀ ದುರ್ಗಾದೇವಿ ದೇವಸ್ಥಾನ, ಹಿರೇಕೆರೂರು. ಎಲ್ಲಾ ಹಕ್ಕುಗಳನ್ನು ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ.",
       backTop: "ಮೇಲಕ್ಕೆ ಹೋಗಿ",
@@ -418,9 +412,42 @@
     });
   }
 
+  function setupHeaderScroll() {
+    const header = document.querySelector(".site-header");
+    if (!header) return;
+    const onScroll = () => {
+      header.classList.toggle("is-scrolled", window.scrollY > 24);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+  }
+
+  function setupReveal() {
+    const items = document.querySelectorAll(".reveal");
+    if (!items.length) return;
+    if (!("IntersectionObserver" in window)) {
+      items.forEach((el) => el.classList.add("is-visible"));
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+    );
+    items.forEach((el) => io.observe(el));
+  }
+
   applyTranslations(currentLang);
   setupNav();
   setupLangToggle();
+  setupHeaderScroll();
+  setupReveal();
   tickCountdown();
   setInterval(tickCountdown, 1000);
 })();
