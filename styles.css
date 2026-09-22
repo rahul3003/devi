@@ -610,7 +610,8 @@ ul, ol {
 .day-card:nth-child(6),
 .day-card:nth-child(7),
 .day-card:nth-child(8),
-.day-card:nth-child(9) {
+.day-card:nth-child(9),
+.day-card:nth-child(10) {
   opacity: 1;
   transform: none;
   animation: none;
