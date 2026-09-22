@@ -39,8 +39,8 @@
       scheduleTitle: "Ten Homas for Navaratri",
       scheduleLead:
         "From Sunday 11-10-2026 — details of the Navaratri Homas to be conducted by Sri Santosh Bhat Guruji of Dharwad.",
-      pujaLabel: "Daily Puja:",
-      pujaTimes: "Morning 6:00 AM · Madhyahna 12:00 PM · Evening 6:30 PM",
+      pujaLabel: "Timings:",
+      pujaTimes: "Morning 8:00 AM · Madhyahna 12:00 PM",
       homaLabel: "Homa:",
       homaTimes: "Each morning (contact the temple for details)",
       gurujiLabel: "Homa Acharya",
@@ -50,7 +50,7 @@
       eventDates: "11-10-2026 Sunday to 20-10-2026 Tuesday",
       sankalpaLabel: "₹501",
       sankalpaInfo:
-        "Those who wish to take part may offer ₹501 and join Mother Durga Devi’s special 10-day Navaratri Homas in their family’s name, and receive prasada.",
+        "Devotees may offer ₹501 for the Navaratri pooja and have the sankalpa performed in their family’s name.",
       labelColor: "Colour",
       labelAlankara: "Alankara",
       labelDayPuja: "Puja",
@@ -170,8 +170,8 @@
       scheduleTitle: "ನವರಾತ್ರಿ ನಿಮಿತ್ಯ ದಶ ಹೋಮಗಳು",
       scheduleLead:
         "ದಿನಾಂಕ: 11-10-2026 ರವಿವಾರದಿಂದ ಧಾರವಾಡದ ಶ್ರೀ ಸಂತೋಷ್ ಭಟ್ ಗುರೂಜಿ ಇವರಿಂದ ನವರಾತ್ರಿ ಹೋಮಗಳ ನಡೆಯಲಿರುವ ವಿವರ",
-      pujaLabel: "ದೈನಂದಿನ ಪೂಜೆ:",
-      pujaTimes: "ಬೆಳಿಗ್ಗೆ 6:00 · ಮಧ್ಯಾಹ್ನ 12:00 · ಸಂಜೆ 6:30",
+      pujaLabel: "ಸಮಯ:",
+      pujaTimes: "ಬೆಳಿಗ್ಗೆ 8:00 · ಮಧ್ಯಾಹ್ನ 12:00",
       homaLabel: "ಹೋಮ:",
       homaTimes: "ಪ್ರತಿದಿನ ಬೆಳಿಗ್ಗೆ (ವಿವರಗಳಿಗೆ ದೇವಸ್ಥಾನವನ್ನು ಸಂಪರ್ಕಿಸಿ)",
       gurujiLabel: "ಹೋಮಾಚಾರ್ಯ",
@@ -181,7 +181,7 @@
       eventDates: "11-10-2026 ರವಿವಾರದಿಂದ 20-10-2026 ಮಂಗಳವಾರ",
       sankalpaLabel: "501/- ರೂ.",
       sankalpaInfo:
-        "ಪೂಜೆಯಲ್ಲಿ ಭಾಗವಹಿಸುವವರು 501/- ರೂ ಕೊಟ್ಟು ತಮ್ಮ ಕುಟುಂಬದ ಹೆಸರಿನಲ್ಲಿಯೇ ವಿಶೇಷ 10 ದಿನಗಳ ಕಾಲ ನಡೆಯುವ ತಾಯಿ ದುರ್ಗಾ ದೇವಿಯ ನವರಾತ್ರಿ ಉತ್ಸವದ ಹೋಮದಲ್ಲಿ ಭಾಗಿಯಾಗಿ ಪ್ರಸಾದವನ್ನು ಸ್ವೀಕರಿಸಿ.",
+        "ನವರಾತ್ರಿ ಪೂಜೆಗಾಗಿ 501/- ರೂ. ಅರ್ಪಿಸಿ, ನಿಮ್ಮ ಕುಟುಂಬದ ಹೆಸರಿನಲ್ಲಿ ಸಂಕಲ್ಪ ಮಾಡಿಸಿಕೊಳ್ಳಿ.",
       labelColor: "ವರ್ಣ",
       labelAlankara: "ಅಲಂಕಾರ",
       labelDayPuja: "ಪೂಜೆ",

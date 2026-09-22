@@ -7,7 +7,11 @@
   <meta name="description" content="ಶ್ರೀ ದುರ್ಗಾದೇವಿ ದೇವಸ್ಥಾನ, ಹಿರೇಕೆರೂರು — ನವರಾತ್ರಿ ನಿಮಿತ್ಯ ದಶ ಹೋಮಗಳು (11–20 ಅಕ್ಟೋಬರ್ 2026)." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Manrope:wght@400;500;600;700&family=Noto+Sans+Kannada:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Manrope:wght@400;500;600;700&family=Noto+Sans+Kannada:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Manrope:wght@400;500;600;700&family=Noto+Sans+Kannada:wght@400;500;600;700&display=swap" rel="stylesheet" /></noscript>
+  <link rel="preload" as="image" href="images/hero-sm.webp" type="image/webp" media="(max-width: 720px)" />
+  <link rel="preload" as="image" href="images/hero.webp" type="image/webp" media="(min-width: 721px)" />
+  <link rel="preload" as="image" href="images/day-01-sm.webp" type="image/webp" media="(max-width: 720px)" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="lang-kn">
@@ -42,7 +46,12 @@
   <main id="main">
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-bg" aria-hidden="true">
-        <img class="hero-photo" src="images/hero.png" alt="" width="1600" height="900" decoding="async" />
+        <picture>
+          <source type="image/webp" media="(max-width: 720px)" srcset="images/hero-sm.webp" />
+          <source type="image/webp" srcset="images/hero.webp" />
+          <source type="image/jpeg" media="(max-width: 720px)" srcset="images/hero-sm.jpg" />
+          <img class="hero-photo" src="images/hero.jpg" alt="" width="1100" height="722" decoding="async" fetchpriority="high" />
+        </picture>
         <div class="hero-glow"></div>
         <div class="hero-motif"></div>
       </div>
@@ -87,16 +96,22 @@
 
         <div class="schedule-meta ornate-frame">
           <p class="meta-dates"><strong data-i18n="eventDatesLabel">ದಿನಾಂಕ:</strong> <span data-i18n="eventDates">11-10-2026 ರವಿವಾರದಿಂದ 20-10-2026 ಮಂಗಳವಾರ</span></p>
+          <p class="meta-times"><strong data-i18n="pujaLabel">ಸಮಯ:</strong> <span data-i18n="pujaTimes">ಬೆಳಿಗ್ಗೆ 8:00 · ಮಧ್ಯಾಹ್ನ 12:00</span></p>
           <div class="sankalpa-panel">
             <span class="sankalpa-badge" data-i18n="sankalpaLabel">501/- ರೂ.</span>
-            <p class="sankalpa-meta"><span data-i18n="sankalpaInfo">ಪೂಜೆಯಲ್ಲಿ ಭಾಗವಹಿಸುವವರು 501/- ರೂ ಕೊಟ್ಟು ತಮ್ಮ ಕುಟುಂಬದ ಹೆಸರಿನಲ್ಲಿಯೇ ವಿಶೇಷ 10 ದಿನಗಳ ಕಾಲ ನಡೆಯುವ ತಾಯಿ ದುರ್ಗಾ ದೇವಿಯ ನವರಾತ್ರಿ ಉತ್ಸವದ ಹೋಮದಲ್ಲಿ ಭಾಗಿಯಾಗಿ ಪ್ರಸಾದವನ್ನು ಸ್ವೀಕರಿಸಿ.</span></p>
+            <p class="sankalpa-meta"><span data-i18n="sankalpaInfo">ನವರಾತ್ರಿ ಪೂಜೆಗಾಗಿ 501/- ರೂ. ಅರ್ಪಿಸಿ, ನಿಮ್ಮ ಕುಟುಂಬದ ಹೆಸರಿನಲ್ಲಿ ಸಂಕಲ್ಪ ಮಾಡಿಸಿಕೊಳ್ಳಿ.</span></p>
           </div>
         </div>
 
         <ol class="day-list">
           <li class="day-card">
             <div class="day-card-media">
-              <img class="day-card-img" src="images/day-01.png" alt="" width="800" height="600" loading="lazy" decoding="async" />
+              <picture>
+                <source type="image/webp" media="(max-width: 720px)" srcset="images/day-01-sm.webp" />
+                <source type="image/webp" srcset="images/day-01.webp" />
+                <source type="image/jpeg" media="(max-width: 720px)" srcset="images/day-01-sm.jpg" />
+                <img class="day-card-img" src="images/day-01.jpg" alt="" width="640" height="480" loading="eager" fetchpriority="high" decoding="async" />
+              </picture>
               <span class="day-num" data-i18n="day1Num">ದಿನ 1</span>
             </div>
             <div class="day-card-body">
@@ -114,7 +129,12 @@
 
           <li class="day-card">
             <div class="day-card-media">
-              <img class="day-card-img" src="images/day-02.png" alt="" width="800" height="600" loading="lazy" decoding="async" />
+              <picture>
+                <source type="image/webp" media="(max-width: 720px)" srcset="images/day-02-sm.webp" />
+                <source type="image/webp" srcset="images/day-02.webp" />
+                <source type="image/jpeg" media="(max-width: 720px)" srcset="images/day-02-sm.jpg" />
+                <img class="day-card-img" src="images/day-02.jpg" alt="" width="640" height="480" loading="lazy" decoding="async" />
+              </picture>
               <span class="day-num" data-i18n="day2Num">ದಿನ 2</span>
             </div>
             <div class="day-card-body">
@@ -132,7 +152,12 @@
 
           <li class="day-card">
             <div class="day-card-media">
-              <img class="day-card-img" src="images/day-03.png" alt="" width="800" height="600" loading="lazy" decoding="async" />
+              <picture>
+                <source type="image/webp" media="(max-width: 720px)" srcset="images/day-03-sm.webp" />
+                <source type="image/webp" srcset="images/day-03.webp" />
+                <source type="image/jpeg" media="(max-width: 720px)" srcset="images/day-03-sm.jpg" />
+                <img class="day-card-img" src="images/day-03.jpg" alt="" width="640" height="480" loading="lazy" decoding="async" />
+              </picture>
               <span class="day-num" data-i18n="day3Num">ದಿನ 3</span>
             </div>
             <div class="day-card-body">
@@ -150,7 +175,12 @@
 
           <li class="day-card">
             <div class="day-card-media">
-              <img class="day-card-img" src="images/day-04.png" alt="" width="800" height="600" loading="lazy" decoding="async" />
+              <picture>
+                <source type="image/webp" media="(max-width: 720px)" srcset="images/day-04-sm.webp" />
+                <source type="image/webp" srcset="images/day-04.webp" />
+                <source type="image/jpeg" media="(max-width: 720px)" srcset="images/day-04-sm.jpg" />
+                <img class="day-card-img" src="images/day-04.jpg" alt="" width="640" height="480" loading="lazy" decoding="async" />
+              </picture>
               <span class="day-num" data-i18n="day4Num">ದಿನ 4</span>
             </div>
             <div class="day-card-body">
@@ -168,7 +198,12 @@
 
           <li class="day-card">
             <div class="day-card-media">
-              <img class="day-card-img" src="images/day-05.png" alt="" width="800" height="600" loading="lazy" decoding="async" />
+              <picture>
+                <source type="image/webp" media="(max-width: 720px)" srcset="images/day-05-sm.webp" />
+                <source type="image/webp" srcset="images/day-05.webp" />
+                <source type="image/jpeg" media="(max-width: 720px)" srcset="images/day-05-sm.jpg" />
+                <img class="day-card-img" src="images/day-05.jpg" alt="" width="640" height="480" loading="lazy" decoding="async" />
+              </picture>
               <span class="day-num" data-i18n="day5Num">ದಿನ 5</span>
             </div>
             <div class="day-card-body">
@@ -186,7 +221,12 @@
 
           <li class="day-card">
             <div class="day-card-media">
-              <img class="day-card-img" src="images/day-06.png" alt="" width="800" height="600" loading="lazy" decoding="async" />
+              <picture>
+                <source type="image/webp" media="(max-width: 720px)" srcset="images/day-06-sm.webp" />
+                <source type="image/webp" srcset="images/day-06.webp" />
+                <source type="image/jpeg" media="(max-width: 720px)" srcset="images/day-06-sm.jpg" />
+                <img class="day-card-img" src="images/day-06.jpg" alt="" width="640" height="480" loading="lazy" decoding="async" />
+              </picture>
               <span class="day-num" data-i18n="day6Num">ದಿನ 6</span>
             </div>
             <div class="day-card-body">
@@ -204,7 +244,12 @@
 
           <li class="day-card">
             <div class="day-card-media">
-              <img class="day-card-img" src="images/day-07.png" alt="" width="800" height="600" loading="lazy" decoding="async" />
+              <picture>
+                <source type="image/webp" media="(max-width: 720px)" srcset="images/day-07-sm.webp" />
+                <source type="image/webp" srcset="images/day-07.webp" />
+                <source type="image/jpeg" media="(max-width: 720px)" srcset="images/day-07-sm.jpg" />
+                <img class="day-card-img" src="images/day-07.jpg" alt="" width="640" height="480" loading="lazy" decoding="async" />
+              </picture>
               <span class="day-num" data-i18n="day7Num">ದಿನ 7</span>
             </div>
             <div class="day-card-body">
@@ -222,7 +267,12 @@
 
           <li class="day-card">
             <div class="day-card-media">
-              <img class="day-card-img" src="images/day-08.png" alt="" width="800" height="600" loading="lazy" decoding="async" />
+              <picture>
+                <source type="image/webp" media="(max-width: 720px)" srcset="images/day-08-sm.webp" />
+                <source type="image/webp" srcset="images/day-08.webp" />
+                <source type="image/jpeg" media="(max-width: 720px)" srcset="images/day-08-sm.jpg" />
+                <img class="day-card-img" src="images/day-08.jpg" alt="" width="640" height="480" loading="lazy" decoding="async" />
+              </picture>
               <span class="day-num" data-i18n="day8Num">ದಿನ 8</span>
             </div>
             <div class="day-card-body">
@@ -240,7 +290,12 @@
 
           <li class="day-card">
             <div class="day-card-media">
-              <img class="day-card-img" src="images/day-09.png" alt="" width="800" height="600" loading="lazy" decoding="async" />
+              <picture>
+                <source type="image/webp" media="(max-width: 720px)" srcset="images/day-09-sm.webp" />
+                <source type="image/webp" srcset="images/day-09.webp" />
+                <source type="image/jpeg" media="(max-width: 720px)" srcset="images/day-09-sm.jpg" />
+                <img class="day-card-img" src="images/day-09.jpg" alt="" width="640" height="480" loading="lazy" decoding="async" />
+              </picture>
               <span class="day-num" data-i18n="day9Num">ದಿನ 9</span>
             </div>
             <div class="day-card-body">
@@ -258,7 +313,12 @@
 
           <li class="day-card day-card--finale">
             <div class="day-card-media">
-              <img class="day-card-img" src="images/day-10.png" alt="" width="800" height="600" loading="lazy" decoding="async" />
+              <picture>
+                <source type="image/webp" media="(max-width: 720px)" srcset="images/day-10-sm.webp" />
+                <source type="image/webp" srcset="images/day-10.webp" />
+                <source type="image/jpeg" media="(max-width: 720px)" srcset="images/day-10-sm.jpg" />
+                <img class="day-card-img" src="images/day-10.jpg" alt="" width="640" height="480" loading="lazy" decoding="async" />
+              </picture>
               <span class="day-num" data-i18n="day10Num">ದಿನ 10</span>
             </div>
             <div class="day-card-body">
@@ -278,14 +338,18 @@
         <div class="schedule-after">
           <div class="archaka-block">
             <figure class="archaka-photo">
-              <img
-                src="images/archaka.png"
-                alt="ಧಾರವಾಡದ ಶ್ರೀ ಸಂತೋಷ್ ಭಟ್ ಗುರೂಜಿ"
-                width="320"
-                height="400"
-                loading="lazy"
-                decoding="async"
-              />
+              <picture>
+                <source type="image/webp" media="(max-width: 720px)" srcset="images/archaka-sm.webp" />
+                <source type="image/webp" srcset="images/archaka.webp" />
+                <img
+                  src="images/archaka.jpg"
+                  alt="ಧಾರವಾಡದ ಶ್ರೀ ಸಂತೋಷ್ ಭಟ್ ಗುರೂಜಿ"
+                  width="320"
+                  height="360"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </picture>
             </figure>
             <div class="archaka-copy">
               <p class="archaka-role" data-i18n="gurujiLabel">ಹೋಮಾಚಾರ್ಯ</p>
@@ -382,15 +446,19 @@
 
         <figure class="about-visual">
           <div class="about-frame">
-            <img
-              class="about-image"
-              src="images/devi.png"
-              alt="ಶ್ರೀ ದುರ್ಗಾದೇವಿ"
-              width="900"
-              height="1200"
-              loading="lazy"
-              decoding="async"
-            />
+            <picture>
+              <source type="image/webp" media="(max-width: 720px)" srcset="images/devi-sm.webp" />
+              <source type="image/webp" srcset="images/devi.webp" />
+              <img
+                class="about-image"
+                src="images/devi.jpg"
+                alt="ಶ್ರೀ ದುರ್ಗಾದೇವಿ"
+                width="480"
+                height="640"
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
           </div>
           <figcaption data-i18n="aboutCaption">ಶ್ರೀ ದುರ್ಗಾದೇವಿ</figcaption>
         </figure>
