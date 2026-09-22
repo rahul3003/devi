@@ -395,9 +395,22 @@
           }
         });
       },
-      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+      /* Tall sections (schedule) can never reach a high threshold on small screens */
+      { threshold: 0, rootMargin: "0px 0px -8% 0px" }
     );
     items.forEach((el) => io.observe(el));
+
+    /* Reveal anything already in/near the viewport (e.g. deep links, fast scroll) */
+    requestAnimationFrame(() => {
+      items.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        const vh = window.innerHeight || document.documentElement.clientHeight;
+        if (rect.top < vh * 0.95 && rect.bottom > 0) {
+          el.classList.add("is-visible");
+          io.unobserve(el);
+        }
+      });
+    });
   }
 
   applyTranslations(currentLang);
