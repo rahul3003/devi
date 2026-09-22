@@ -1,123 +1,14 @@
 (() => {
   "use strict";
 
-  /** Sharad Navaratri 2026 — Ashwin Shukla Pratipada (update if temple calendar differs) */
+  /** Sharad Navaratri 2026 — Ashwin Shukla Pratipada */
   const NAVARATRI_START = new Date("2026-10-11T06:00:00+05:30");
-
-  /** Free setup — edit these only */
-  const CONFIG = {
-    templeWhatsApp: "917892655210",
-    /** Change to your real UPI ID (PhonePe/GPay/Paytm), e.g. 7892655210@ybl */
-    upiId: "7892655210@ybl",
-    payeeName: "Sri Durgadevi Temple Hirekerur",
-    sevaAmounts: {
-      full9: 1101,
-      single: 501,
-      annadana: 1001,
-      kumkum: 251,
-    },
-    /**
-     * Optional free Google Sheet (all devices can share one sheet):
-     * 1) Create a Google Sheet
-     * 2) Extensions → Apps Script → paste google-apps-script.gs → Deploy as Web app
-     * 3) Paste the Web App URL here
-     */
-    googleScriptUrl: "",
-    /** Committee login for Excel download only */
-    adminEmail: "durgadevihirekerur@gmail.com",
-    adminPassword: "durgadevi@581111",
-  };
-
-  const SEVA_LABELS = {
-    en: {
-      full9: "Full 9-day Homa Sankalpa",
-      single: "Single Day Homa",
-      annadana: "Annadana Seva",
-      kumkum: "Kumkumarchana",
-    },
-    kn: {
-      full9: "ಪೂರ್ಣ 9-ದಿನ ಹೋಮ ಸಂಕಲ್ಪ",
-      single: "ಒಂದು ದಿನದ ಹೋಮ",
-      annadana: "ಅನ್ನದಾನ ಸೇವೆ",
-      kumkum: "ಕುಂಕುಮಾರ್ಚನೆ",
-    },
-  };
-
-  const GOTRAS = [
-    { en: "Bharadwaja", kn: "ಭರದ್ವಾಜ" },
-    { en: "Kashyapa", kn: "ಕಶ್ಯಪ" },
-    { en: "Vasishtha", kn: "ವಸಿಷ್ಠ" },
-    { en: "Vishwamitra", kn: "ವಿಶ್ವಾಮಿತ್ರ" },
-    { en: "Gautama", kn: "ಗೌತಮ" },
-    { en: "Atri", kn: "ಅತ್ರಿ" },
-    { en: "Agastya", kn: "ಅಗಸ್ತ್ಯ" },
-    { en: "Jamadagni", kn: "ಜಮದಗ್ನಿ" },
-    { en: "Bhrigu", kn: "ಭೃಗು" },
-    { en: "Angirasa", kn: "ಅಂಗಿರಸ" },
-    { en: "Pulastya", kn: "ಪುಲಸ್ತ್ಯ" },
-    { en: "Pulaha", kn: "ಪುಲಹ" },
-    { en: "Kratu", kn: "ಕ್ರತು" },
-    { en: "Marichi", kn: "ಮರೀಚಿ" },
-    { en: "Shandilya", kn: "ಶಾಂಡಿಲ್ಯ" },
-    { en: "Kaundinya", kn: "ಕೌಂಡಿನ್ಯ" },
-    { en: "Harita", kn: "ಹರೀತ" },
-    { en: "Kaushika", kn: "ಕೌಶಿಕ" },
-    { en: "Srivatsa", kn: "ಶ್ರೀವತ್ಸ" },
-    { en: "Maudgalya", kn: "ಮೌದ್ಗಲ್ಯ" },
-    { en: "Other / Not listed", kn: "ಇತರೆ / ಪಟ್ಟಿಯಲ್ಲಿಲ್ಲ" },
-  ];
-
-  const RASHIS = [
-    { en: "Mesha (Aries)", kn: "ಮೇಷ" },
-    { en: "Vrishabha (Taurus)", kn: "ವೃಷಭ" },
-    { en: "Mithuna (Gemini)", kn: "ಮಿಥುನ" },
-    { en: "Karka (Cancer)", kn: "ಕರ್ಕಾಟಕ" },
-    { en: "Simha (Leo)", kn: "ಸಿಂಹ" },
-    { en: "Kanya (Virgo)", kn: "ಕನ್ಯಾ" },
-    { en: "Tula (Libra)", kn: "ತುಲಾ" },
-    { en: "Vrischika (Scorpio)", kn: "ವೃಶ್ಚಿಕ" },
-    { en: "Dhanu (Sagittarius)", kn: "ಧನು" },
-    { en: "Makara (Capricorn)", kn: "ಮಕರ" },
-    { en: "Kumbha (Aquarius)", kn: "ಕುಂಭ" },
-    { en: "Meena (Pisces)", kn: "ಮೀನ" },
-  ];
-
-  const NAKSHATRAS = [
-    { en: "Ashwini", kn: "ಅಶ್ವಿನಿ" },
-    { en: "Bharani", kn: "ಭರಣಿ" },
-    { en: "Krittika", kn: "ಕೃತ್ತಿಕಾ" },
-    { en: "Rohini", kn: "ರೋಹಿಣಿ" },
-    { en: "Mrigashira", kn: "ಮೃಗಶಿರ" },
-    { en: "Ardra", kn: "ಆರ್ದ್ರಾ" },
-    { en: "Punarvasu", kn: "ಪುನರ್ವಸು" },
-    { en: "Pushya", kn: "ಪುಷ್ಯ" },
-    { en: "Ashlesha", kn: "ಆಶ್ಲೇಷಾ" },
-    { en: "Magha", kn: "ಮಘಾ" },
-    { en: "Purva Phalguni", kn: "ಪೂರ್ವ ಫಲ್ಗುಣಿ" },
-    { en: "Uttara Phalguni", kn: "ಉತ್ತರ ಫಲ್ಗುಣಿ" },
-    { en: "Hasta", kn: "ಹಸ್ತ" },
-    { en: "Chitra", kn: "ಚಿತ್ರಾ" },
-    { en: "Swati", kn: "ಸ್ವಾತಿ" },
-    { en: "Vishakha", kn: "ವಿಶಾಖಾ" },
-    { en: "Anuradha", kn: "ಅನುರಾಧಾ" },
-    { en: "Jyeshtha", kn: "ಜ್ಯೇಷ್ಠಾ" },
-    { en: "Mula", kn: "ಮೂಲಾ" },
-    { en: "Purva Ashadha", kn: "ಪೂರ್ವಾಷಾಢಾ" },
-    { en: "Uttara Ashadha", kn: "ಉತ್ತರಾಷಾಢಾ" },
-    { en: "Shravana", kn: "ಶ್ರವಣ" },
-    { en: "Dhanishta", kn: "ಧನಿಷ್ಠಾ" },
-    { en: "Shatabhisha", kn: "ಶತಭಿಷಾ" },
-    { en: "Purva Bhadrapada", kn: "ಪೂರ್ವ ಭಾದ್ರಪದಾ" },
-    { en: "Uttara Bhadrapada", kn: "ಉತ್ತರ ಭಾದ್ರಪದಾ" },
-    { en: "Revati", kn: "ರೇವತಿ" },
-  ];
 
   const translations = {
     en: {
       navBrand: "Sri Durgadevi Temple",
       navAbout: "About",
       navSchedule: "Schedule",
-      navSeva: "Book Seva",
       navDarshan: "Gallery",
       navVisit: "Visit",
       heroKicker: "Hirekerur · Haveri · Karnataka",
@@ -131,8 +22,8 @@
       unitHours: "Hours",
       unitMins: "Mins",
       unitSecs: "Secs",
-      heroCta: "Book Navaratri 9-Day Homa Seva",
-      heroSecondary: "View Ritual Schedule",
+      heroCta: "View Ritual Schedule",
+      heroSecondary: "Contact & Visit",
       aboutEyebrow: "About the Temple",
       aboutTitle: "Guardian of Hirekerur’s sacred lake",
       aboutP1:
@@ -250,59 +141,6 @@
       day9Puja: "5:30 AM special Abhisheka · Rathotsava · 12:00 PM Poornahuti",
       day9Homa: "Vijayadashami Poornahuti — noon",
       day9Seva: "Poornahuti sankalpa · Maha Annadana · Aparajita puja",
-      sevaEyebrow: "Seva Booking",
-      sevaTitle: "Register for Navaratri Homa Seva",
-      sevaLead:
-        "Offer sankalpa in your family’s name. Pay with free UPI QR, then submit. WhatsApp welcome is sent next.",
-      labelName: "Devotee Name",
-      labelGotra: "Gotra",
-      labelRashi: "Rashi",
-      labelNakshatra: "Nakshatra",
-      selectPlaceholder: "Select",
-      labelMobile: "Mobile Number",
-      labelAddress: "Address",
-      labelSeva: "Seva Selection",
-      sevaFull: "Full 9-day Homa Sankalpa",
-      sevaSingle: "Single Day Homa",
-      sevaAnnadana: "Annadana Seva",
-      sevaKumkum: "Kumkumarchana",
-      labelDayPick: "Preferred Day",
-      optDay1: "Day 1 — Mahaganapathi Homa",
-      optDay2: "Day 2 — Navagraha Homa",
-      optDay3: "Day 3 — Sudarshana Homa",
-      optDay4: "Day 4 — Sapthashati Homa",
-      optDay5: "Day 5 — Chandi Homa",
-      optDay6: "Day 6 — Navachandi Homa",
-      optDay7: "Day 7 — Maha Chandi Homa",
-      optDay8: "Day 8 — Durga Homa",
-      optDay9: "Day 9 — Vijayadashami Poornahuti",
-      payTitle: "UPI / QR Payment",
-      payNote:
-        "Scan the auto-generated QR (free UPI), pay the seva amount, then submit. Optional: add UTR after payment.",
-      qrLabel: "Scan to pay (UPI)",
-      upiLabel: "UPI ID:",
-      upiHint: "Free QR updates when you change seva. Edit UPI ID in script.js if needed.",
-      labelAmount: "Seva Amount:",
-      labelTxn: "Transaction / UTR (optional)",
-      submitBtn: "Submit Seva Registration",
-      formSuccess:
-        "Thank you. Registration saved. Use WhatsApp buttons below for welcome message and temple notify.",
-      formError: "Please fill all required fields with valid details.",
-      afterTitle: "Registration saved — next steps (all free)",
-      afterLead:
-        "Your details are stored. Pay via QR if pending, then use WhatsApp to send welcome / notify the temple.",
-      excelAdminBtn: "Download member Excel sheet",
-      excelNote: "Only logged-in temple users can download the member Excel sheet.",
-      adminTitle: "Committee login — Excel",
-      adminEmailLabel: "Email",
-      adminPasswordLabel: "Password",
-      adminLoginBtn: "Login",
-      adminLogoutBtn: "Logout",
-      adminLoggedIn: "Logged in as committee",
-      adminLoginError: "Invalid email or password.",
-      adminLoginOk: "Login successful. You can download Excel now.",
-      waWelcomeBtn: "WhatsApp Welcome",
-      waTempleBtn: "Notify Temple WhatsApp",
       darshanEyebrow: "Temple Gallery",
       darshanTitle: "Witness Devi’s Alankara from afar",
       darshanLead:
@@ -316,9 +154,9 @@
       visitAddress:
         "Sri Durgadevi Temple<br />Temple Road, Hirekerur<br />Haveri District, Karnataka 581111",
       contactCommittee: "Temple Committee",
-      contactSeva: "Seva Desk / WhatsApp",
+      contactSeva: "WhatsApp",
       contactEmail: "Email",
-      visitNote: "WhatsApp seva desk: +91 78926 55210",
+      visitNote: "WhatsApp: +91 78926 55210",
       footerBlessing: "Om Dum Durgayei Namaha",
       footerCopy: "© 2026 Sri Durgadevi Temple, Hirekerur. All rights reserved.",
       backTop: "Back to top",
@@ -327,7 +165,6 @@
       navBrand: "ಶ್ರೀ ದುರ್ಗಾದೇವಿ ದೇವಸ್ಥಾನ",
       navAbout: "ಪರಿಚಯ",
       navSchedule: "ವೇಳಾಪಟ್ಟಿ",
-      navSeva: "ಸೇವೆ ಬುಕ್",
       navDarshan: "ಗ್ಯಾಲರಿ",
       navVisit: "ಭೇಟಿ",
       heroKicker: "ಹಿರೇಕೆರೂರು · ಹಾವೇರಿ · ಕರ್ನಾಟಕ",
@@ -341,8 +178,8 @@
       unitHours: "ಗಂಟೆ",
       unitMins: "ನಿಮಿಷ",
       unitSecs: "ಸೆಕೆಂಡ್",
-      heroCta: "ನವರಾತ್ರಿ 9-ದಿನ ಹೋಮ ಸೇವೆ ಬುಕ್ ಮಾಡಿ",
-      heroSecondary: "ಆಚರಣೆ ವೇಳಾಪಟ್ಟಿ ನೋಡಿ",
+      heroCta: "ಆಚರಣೆ ವೇಳಾಪಟ್ಟಿ ನೋಡಿ",
+      heroSecondary: "ಸಂಪರ್ಕ ಮತ್ತು ಭೇಟಿ",
       aboutEyebrow: "ದೇವಸ್ಥಾನದ ಪರಿಚಯ",
       aboutTitle: "ಹಿರೇಕೆರೂರಿನ ಪವಿತ್ರ ಸರೋವರದ ರಕ್ಷಕಿ",
       aboutP1:
@@ -460,63 +297,9 @@
       day9Puja: "5:30 ವಿಶೇಷ ಅಭಿಷೇಕ · ರಥೋತ್ಸವ · 12:00 ಪೂರ್ಣಾಹುತಿ",
       day9Homa: "ವಿಜಯದಶಮಿ ಪೂರ್ಣಾಹುತಿ — ಮಧ್ಯಾಹ್ನ",
       day9Seva: "ಪೂರ್ಣಾಹುತಿ ಸಂಕಲ್ಪ · ಮಹಾ ಅನ್ನದಾನ · ಆಪರಾಜಿತಾ ಪೂಜೆ",
-      sevaEyebrow: "ಸೇವಾ ನೋಂದಣಿ",
-      sevaTitle: "ನವರಾತ್ರಿ ಹೋಮ ಸೇವೆಗೆ ನೋಂದಾಯಿಸಿ",
-      sevaLead:
-        "ನಿಮ್ಮ ಕುಟುಂಬದ ಹೆಸರಿನಲ್ಲಿ ಸಂಕಲ್ಪ ಮಾಡಿ. ಉಚಿತ UPI QR ಮೂಲಕ ಪಾವತಿಸಿ, ನಂತರ ಸಲ್ಲಿಸಿ. WhatsApp ಸ್ವಾಗತ ಮುಂದೆ.",
-      labelName: "ಭಕ್ತರ ಹೆಸರು",
-      labelGotra: "ಗೋತ್ರ",
-      labelRashi: "ರಾಶಿ",
-      labelNakshatra: "ನಕ್ಷತ್ರ",
-      selectPlaceholder: "ಆಯ್ಕೆ ಮಾಡಿ",
-      labelMobile: "ಮೊಬೈಲ್ ಸಂಖ್ಯೆ",
-      labelAddress: "ವಿಳಾಸ",
-      labelSeva: "ಸೇವೆ ಆಯ್ಕೆ",
-      sevaFull: "ಪೂರ್ಣ 9-ದಿನ ಹೋಮ ಸಂಕಲ್ಪ",
-      sevaSingle: "ಒಂದು ದಿನದ ಹೋಮ",
-      sevaAnnadana: "ಅನ್ನದಾನ ಸೇವೆ",
-      sevaKumkum: "ಕುಂಕುಮಾರ್ಚನೆ",
-      labelDayPick: "ಆದ್ಯತೆಯ ದಿನ",
-      optDay1: "ದಿನ 1 — ಮಹಾಗಣಪತಿ ಹೋಮ",
-      optDay2: "ದಿನ 2 — ನವಗ್ರಹ ಹೋಮ",
-      optDay3: "ದಿನ 3 — ಸುದರ್ಶನ ಹೋಮ",
-      optDay4: "ದಿನ 4 — ಸಪ್ತಶತಿ ಹೋಮ",
-      optDay5: "ದಿನ 5 — ಚಂಡಿ ಹೋಮ",
-      optDay6: "ದಿನ 6 — ನವಚಂಡಿ ಹೋಮ",
-      optDay7: "ದಿನ 7 — ಮಹಾ ಚಂಡಿ ಹೋಮ",
-      optDay8: "ದಿನ 8 — ದುರ್ಗಾ ಹೋಮ",
-      optDay9: "ದಿನ 9 — ವಿಜಯದಶಮಿ ಪೂರ್ಣಾಹುತಿ",
-      payTitle: "UPI / QR ಪಾವತಿ",
-      payNote:
-        "ಉಚಿತ UPI QR ಸ್ಕ್ಯಾನ್ ಮಾಡಿ ಪಾವತಿಸಿ, ನಂತರ ಸಲ್ಲಿಸಿ. ಪಾವತಿಯ ನಂತರ UTR ಐಚ್ಛಿಕ.",
-      qrLabel: "ಪಾವತಿಸಲು ಸ್ಕ್ಯಾನ್ ಮಾಡಿ (UPI)",
-      upiLabel: "UPI ID:",
-      upiHint: "ಸೇವೆ ಬದಲಾದಾಗ QR ಅಪ್‌ಡೇಟ್ ಆಗುತ್ತದೆ. UPI ID script.js ನಲ್ಲಿ ಬದಲಾಯಿಸಿ.",
-      labelAmount: "ಸೇವಾ ಮೊತ್ತ:",
-      labelTxn: "ವಹಿವಾಟು / UTR (ಐಚ್ಛಿಕ)",
-      submitBtn: "ಸೇವಾ ನೋಂದಣಿ ಸಲ್ಲಿಸಿ",
-      formSuccess:
-        "ಧನ್ಯವಾದಗಳು. ನೋಂದಣಿ ಉಳಿಸಲಾಗಿದೆ. ಕೆಳಗಿನ WhatsApp ಬಟನ್‌ಗಳನ್ನು ಬಳಸಿ.",
-      formError: "ದಯವಿಟ್ಟು ಎಲ್ಲಾ ಅಗತ್ಯ ಕ್ಷೇತ್ರಗಳನ್ನು ಸರಿಯಾಗಿ ತುಂಬಿ.",
-      afterTitle: "ನೋಂದಣಿ ಉಳಿಸಲಾಗಿದೆ — ಮುಂದಿನ ಹಂತಗಳು (ಉಚಿತ)",
-      afterLead:
-        "ನಿಮ್ಮ ವಿವರಗಳು ಉಳಿಸಲಾಗಿವೆ. ಬಾಕಿ ಇದ್ದರೆ QR ಮೂಲಕ ಪಾವತಿಸಿ, ನಂತರ WhatsApp ಸ್ವಾಗತ / ದೇವಸ್ಥಾನಕ್ಕೆ ಸಂದೇಶ ಕಳುಹಿಸಿ.",
-      excelAdminBtn: "ಸದಸ್ಯರ Excel ಶೀಟ್ ಡೌನ್‌ಲೋಡ್",
-      excelNote: "ಲಾಗಿನ್ ಆದ ದೇವಸ್ಥಾನ ಬಳಕೆದಾರರು ಮಾತ್ರ Excel ಡೌನ್‌ಲೋಡ್ ಮಾಡಬಹುದು.",
-      adminTitle: "ಸಮಿತಿ ಲಾಗಿನ್ — Excel",
-      adminEmailLabel: "ಇಮೇಲ್",
-      adminPasswordLabel: "ಪಾಸ್‌ವರ್ಡ್",
-      adminLoginBtn: "ಲಾಗಿನ್",
-      adminLogoutBtn: "ಲಾಗ್‌ಔಟ್",
-      adminLoggedIn: "ಸಮಿತಿ ಲಾಗಿನ್ ಆಗಿದೆ",
-      adminLoginError: "ಇಮೇಲ್ ಅಥವಾ ಪಾಸ್‌ವರ್ಡ್ ತಪ್ಪಾಗಿದೆ.",
-      adminLoginOk: "ಲಾಗಿನ್ ಯಶಸ್ವಿ. ಈಗ Excel ಡೌನ್‌ಲೋಡ್ ಮಾಡಬಹುದು.",
-      waWelcomeBtn: "WhatsApp ಸ್ವಾಗತ",
-      waTempleBtn: "ದೇವಸ್ಥಾನ WhatsApp ಗೆ ತಿಳಿಸಿ",
       darshanEyebrow: "ದೇವಸ್ಥಾನ ಗ್ಯಾಲರಿ",
       darshanTitle: "ದೂರದಿಂದಲೇ ದೇವಿಯ ಅಲಂಕಾರ ನೋಡಿ",
-      darshanLead:
-        "ಗರ್ಭಗುಡಿ, ಪವಿತ್ರ ಕೆರೆ ಮತ್ತು ನವರಾತ್ರಿ ಆಚರಣೆಗಳ ದೃಶ್ಯಗಳು.",
+      darshanLead: "ಗರ್ಭಗುಡಿ, ಪವಿತ್ರ ಕೆರೆ ಮತ್ತು ನವರಾತ್ರಿ ಆಚರಣೆಗಳ ದೃಶ್ಯಗಳು.",
       gal1: "ಗರ್ಭಗುಡಿ ಅಲಂಕಾರ",
       gal2: "ದುರ್ಗಾದೇವಿ ಕೆರೆ",
       gal3: "ಚಂಡಿ ಹೋಮ",
@@ -526,9 +309,9 @@
       visitAddress:
         "ಶ್ರೀ ದುರ್ಗಾದೇವಿ ದೇವಸ್ಥಾನ<br />ಟೆಂಪಲ್ ರೋಡ್, ಹಿರೇಕೆರೂರು<br />ಹಾವೇರಿ ಜಿಲ್ಲೆ, ಕರ್ನಾಟಕ 581111",
       contactCommittee: "ದೇವಸ್ಥಾನ ಸಮಿತಿ",
-      contactSeva: "ಸೇವಾ ವಿಭಾಗ / WhatsApp",
+      contactSeva: "WhatsApp",
       contactEmail: "ಇಮೇಲ್",
-      visitNote: "WhatsApp ಸೇವಾ ವಿಭಾಗ: +91 78926 55210",
+      visitNote: "WhatsApp: +91 78926 55210",
       footerBlessing: "ಓಂ ದುಂ ದುರ್ಗಾಯೈ ನಮಃ",
       footerCopy: "© 2026 ಶ್ರೀ ದುರ್ಗಾದೇವಿ ದೇವಸ್ಥಾನ, ಹಿರೇಕೆರೂರು. ಎಲ್ಲಾ ಹಕ್ಕುಗಳನ್ನು ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ.",
       backTop: "ಮೇಲಕ್ಕೆ ಹೋಗಿ",
@@ -562,39 +345,6 @@
     currentLang = lang;
     localStorage.setItem("durga-lang", lang);
     updateCountdownLabel();
-    fillAstroSelects();
-  }
-
-  function fillAstroSelects() {
-    const dict = translations[currentLang] || translations.en;
-    const langKey = currentLang === "kn" ? "kn" : "en";
-
-    const fill = (selectId, items) => {
-      const el = document.getElementById(selectId);
-      if (!el) return;
-      const prev = el.value;
-      el.innerHTML = "";
-      const placeholder = document.createElement("option");
-      placeholder.value = "";
-      placeholder.disabled = true;
-      placeholder.selected = !prev;
-      placeholder.textContent = dict.selectPlaceholder || "Select";
-      el.appendChild(placeholder);
-      items.forEach((item) => {
-        const opt = document.createElement("option");
-        opt.value = item.en;
-        opt.textContent = item[langKey] || item.en;
-        el.appendChild(opt);
-      });
-      if (prev && [...el.options].some((o) => o.value === prev)) {
-        el.value = prev;
-        placeholder.selected = false;
-      }
-    };
-
-    fill("gotra-select", GOTRAS);
-    fill("rashi-select", RASHIS);
-    fill("nakshatra-select", NAKSHATRAS);
   }
 
   function pad(n) {
@@ -668,348 +418,9 @@
     });
   }
 
-  function getSelectedSeva(form) {
-    const checked = form.querySelector('input[name="seva"]:checked');
-    return checked ? checked.value : "full9";
-  }
-
-  function getSevaAmount(sevaKey) {
-    return CONFIG.sevaAmounts[sevaKey] || CONFIG.sevaAmounts.full9;
-  }
-
-  function buildUpiLink(amount, note) {
-    const params = new URLSearchParams({
-      pa: CONFIG.upiId,
-      pn: CONFIG.payeeName,
-      am: String(amount),
-      cu: "INR",
-      tn: note.slice(0, 80),
-    });
-    return `upi://pay?${params.toString()}`;
-  }
-
-  function updatePaymentQr(form) {
-    const canvas = document.getElementById("upi-qr");
-    const amountEl = document.getElementById("qr-amount");
-    const amountText = document.getElementById("seva-amount-text");
-    const upiText = document.getElementById("upi-id-text");
-    if (!canvas || typeof QRCode === "undefined") return;
-
-    const seva = getSelectedSeva(form);
-    const amount = getSevaAmount(seva);
-    const name = (form.elements.name && form.elements.name.value) || "Devotee";
-    const note = `Navaratri ${seva} - ${name}`;
-    const upi = buildUpiLink(amount, note);
-
-    if (upiText) upiText.textContent = CONFIG.upiId;
-    if (amountEl) amountEl.textContent = `₹${amount}`;
-    if (amountText) amountText.textContent = `₹${amount}`;
-
-    QRCode.toCanvas(
-      canvas,
-      upi,
-      {
-        width: 180,
-        margin: 1,
-        color: { dark: "#1a070c", light: "#f8f0e3" },
-      },
-      () => {}
-    );
-  }
-
-  function loadRegistrations() {
-    try {
-      return JSON.parse(localStorage.getItem("durga-seva") || "[]");
-    } catch {
-      return [];
-    }
-  }
-
-  function saveRegistrations(list) {
-    localStorage.setItem("durga-seva", JSON.stringify(list));
-  }
-
-  function downloadExcel() {
-    if (!isAdminLoggedIn()) {
-      const dict = translations[currentLang];
-      alert(dict.adminLoginError);
-      document.getElementById("admin-excel")?.scrollIntoView({ behavior: "smooth" });
-      return;
-    }
-    if (typeof XLSX === "undefined") {
-      alert("Excel library still loading. Please try again in a second.");
-      return;
-    }
-    const rows = loadRegistrations();
-    if (!rows.length) {
-      alert(currentLang === "kn" ? "ಇನ್ನೂ ನೋಂದಣಿಗಳಿಲ್ಲ." : "No registrations yet.");
-      return;
-    }
-
-    const sheetRows = rows.map((r, i) => ({
-      "S.No": i + 1,
-      Name: r.name || "",
-      Gotra: r.gotra || "",
-      Rashi: r.rashi || "",
-      Nakshatra: r.nakshatra || "",
-      Mobile: r.mobile || "",
-      Address: r.address || "",
-      Seva: r.seva || "",
-      Day: r.day || "",
-      Amount: r.amount || "",
-      UTR: r.txn || "",
-      Language: r.lang || "",
-      SubmittedAt: r.submittedAt || "",
-    }));
-
-    const sheet = XLSX.utils.json_to_sheet(sheetRows);
-    const book = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(book, sheet, "Registrations");
-    XLSX.writeFile(book, `durgadevi-navaratri-seva-${new Date().toISOString().slice(0, 10)}.xlsx`);
-  }
-
-  function isAdminLoggedIn() {
-    return sessionStorage.getItem("durga-admin") === "1";
-  }
-
-  function syncAdminUI() {
-    const loginForm = document.getElementById("admin-login");
-    const panel = document.getElementById("admin-panel");
-    const loggedIn = isAdminLoggedIn();
-    if (loginForm) loginForm.hidden = loggedIn;
-    if (panel) panel.hidden = !loggedIn;
-  }
-
-  function setupAdminAuth() {
-    const loginForm = document.getElementById("admin-login");
-    const status = document.getElementById("admin-login-status");
-    const excelAdmin = document.getElementById("excel-admin-btn");
-    const logoutBtn = document.getElementById("admin-logout-btn");
-
-    syncAdminUI();
-
-    if (excelAdmin) {
-      excelAdmin.addEventListener("click", downloadExcel);
-    }
-
-    if (logoutBtn) {
-      logoutBtn.addEventListener("click", () => {
-        sessionStorage.removeItem("durga-admin");
-        syncAdminUI();
-        if (loginForm) loginForm.reset();
-        if (status) {
-          status.hidden = true;
-          status.textContent = "";
-        }
-      });
-    }
-
-    if (!loginForm) return;
-
-    loginForm.addEventListener("submit", (event) => {
-      event.preventDefault();
-      const dict = translations[currentLang];
-      const email = String(loginForm.elements.adminEmail.value || "")
-        .trim()
-        .toLowerCase();
-      const password = String(loginForm.elements.adminPassword.value || "");
-
-      const ok =
-        email === CONFIG.adminEmail.toLowerCase() &&
-        password === CONFIG.adminPassword;
-
-      if (!ok) {
-        if (status) {
-          status.hidden = false;
-          status.classList.add("is-error");
-          status.textContent = dict.adminLoginError;
-        }
-        sessionStorage.removeItem("durga-admin");
-        syncAdminUI();
-        return;
-      }
-
-      sessionStorage.setItem("durga-admin", "1");
-      syncAdminUI();
-      if (status) {
-        status.hidden = false;
-        status.classList.remove("is-error");
-        status.textContent = dict.adminLoginOk;
-      }
-      loginForm.reset();
-    });
-  }
-
-  function welcomeMessage(data) {
-    const sevaName =
-      (SEVA_LABELS[currentLang] && SEVA_LABELS[currentLang][data.seva]) || data.seva;
-    if (currentLang === "kn") {
-      return (
-        `ॐ ಶ್ರೀ ದುರ್ಗಾದೇವಿ ದೇವಸ್ಥಾನ, ಹಿರೇಕೆರೂರು\n\n` +
-        `ನಮಸ್ಕಾರ ${data.name} ಜೀ,\n` +
-        `ನಿಮ್ಮ ನವರಾತ್ರಿ ಸೇವಾ ನೋಂದಣಿಗೆ ಸ್ವಾಗತ.\n\n` +
-        `ಸೇವೆ: ${sevaName}\n` +
-        `ಮೊತ್ತ: ₹${data.amount}\n` +
-        `ಮೊಬೈಲ್: ${data.mobile}\n\n` +
-        `ದೇವಿಯ ಆಶೀರ್ವಾದ ಸದಾ ಇರಲಿ.\n` +
-        `ಸಂಪರ್ಕ: +91 78926 55210`
-      );
-    }
-    return (
-      `Om — Sri Durgadevi Temple, Hirekerur\n\n` +
-      `Namaskara ${data.name},\n` +
-      `Welcome — your Navaratri seva registration is received.\n\n` +
-      `Seva: ${sevaName}\n` +
-      `Amount: ₹${data.amount}\n` +
-      `Mobile: ${data.mobile}\n\n` +
-      `May Devi bless you.\n` +
-      `Contact: +91 78926 55210`
-    );
-  }
-
-  function templeNotifyMessage(data) {
-    const sevaName =
-      (SEVA_LABELS.en && SEVA_LABELS.en[data.seva]) || data.seva;
-    return (
-      `New Navaratri Seva Registration\n\n` +
-      `Name: ${data.name}\n` +
-      `Gotra: ${data.gotra}\n` +
-      `Rashi: ${data.rashi || "-"}\n` +
-      `Nakshatra: ${data.nakshatra}\n` +
-      `Mobile: ${data.mobile}\n` +
-      `Address: ${data.address}\n` +
-      `Seva: ${sevaName}\n` +
-      `Day: ${data.day || "-"}\n` +
-      `Amount: ₹${data.amount}\n` +
-      `UTR: ${data.txn || "pending"}\n` +
-      `Time: ${data.submittedAt}`
-    );
-  }
-
-  function waLink(phoneDigits, text) {
-    const clean = String(phoneDigits).replace(/\D/g, "");
-    const withCountry = clean.length === 10 ? `91${clean}` : clean;
-    return `https://wa.me/${withCountry}?text=${encodeURIComponent(text)}`;
-  }
-
-  function postToGoogleSheet(data) {
-    if (!CONFIG.googleScriptUrl) return;
-    fetch(CONFIG.googleScriptUrl, {
-      method: "POST",
-      mode: "no-cors",
-      headers: { "Content-Type": "text/plain;charset=utf-8" },
-      body: JSON.stringify(data),
-    }).catch(() => {});
-  }
-
-  function setupSevaForm() {
-    const form = document.getElementById("seva-form");
-    const daySelect = document.querySelector("[data-day-select]");
-    const status = document.getElementById("form-status");
-    const after = document.getElementById("after-submit");
-    if (!form) return;
-
-    const upiText = document.getElementById("upi-id-text");
-    if (upiText) upiText.textContent = CONFIG.upiId;
-
-    const syncDayVisibility = () => {
-      const single = form.querySelector('input[name="seva"][value="single"]');
-      const show = Boolean(single && single.checked);
-      if (!daySelect) return;
-      daySelect.classList.toggle("is-open", show);
-      daySelect.hidden = !show;
-      const select = daySelect.querySelector("select");
-      if (select) {
-        select.disabled = !show;
-        select.required = show;
-        if (!show) select.value = "1";
-      }
-    };
-
-    const refreshQr = () => {
-      syncDayVisibility();
-      updatePaymentQr(form);
-    };
-
-    form.querySelectorAll('input[name="seva"]').forEach((input) => {
-      input.addEventListener("change", refreshQr);
-      input.addEventListener("click", refreshQr);
-    });
-    form.querySelector(".seva-options")?.addEventListener("change", refreshQr);
-
-    if (form.elements.name) {
-      form.elements.name.addEventListener("input", () => updatePaymentQr(form));
-    }
-
-    // Wait briefly for CDN QRCode if deferred
-    const bootQr = () => updatePaymentQr(form);
-    if (typeof QRCode !== "undefined") bootQr();
-    else setTimeout(bootQr, 400);
-    fillAstroSelects();
-    syncDayVisibility();
-
-    form.addEventListener("submit", (event) => {
-      event.preventDefault();
-      const dict = translations[currentLang];
-
-      if (!form.checkValidity()) {
-        status.hidden = false;
-        status.classList.add("is-error");
-        status.textContent = dict.formError;
-        form.reportValidity();
-        return;
-      }
-
-      const raw = Object.fromEntries(new FormData(form).entries());
-      const seva = raw.seva || "full9";
-      const amount = getSevaAmount(seva);
-      const data = {
-        ...raw,
-        amount,
-        upiId: CONFIG.upiId,
-        submittedAt: new Date().toISOString(),
-        lang: currentLang,
-      };
-
-      const submissions = loadRegistrations();
-      submissions.push(data);
-      saveRegistrations(submissions);
-      postToGoogleSheet(data);
-
-      const welcome = welcomeMessage(data);
-      const notify = templeNotifyMessage(data);
-      const waWelcome = document.getElementById("wa-welcome-btn");
-      const waTemple = document.getElementById("wa-temple-btn");
-
-      if (waWelcome) {
-        waWelcome.href = waLink(data.mobile, welcome);
-        waWelcome.textContent = dict.waWelcomeBtn;
-      }
-      if (waTemple) {
-        waTemple.href = waLink(CONFIG.templeWhatsApp, notify);
-        waTemple.textContent = dict.waTempleBtn;
-      }
-
-      status.hidden = false;
-      status.classList.remove("is-error");
-      status.textContent = dict.formSuccess;
-      if (after) after.hidden = false;
-
-      // Open welcome WhatsApp to the registered member (free wa.me)
-      window.open(waLink(data.mobile, welcome), "_blank", "noopener");
-
-      form.reset();
-      syncDayVisibility();
-      updatePaymentQr(form);
-      after?.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    });
-  }
-
   applyTranslations(currentLang);
   setupNav();
   setupLangToggle();
-  setupSevaForm();
-  setupAdminAuth();
   tickCountdown();
   setInterval(tickCountdown, 1000);
 })();

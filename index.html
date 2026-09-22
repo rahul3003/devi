@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="ಶ್ರೀ ದುರ್ಗಾದೇವಿ ದೇವಸ್ಥಾನ, ಹಿರೇಕೆರೂರು — 9-ದಿನ ನವರಾತ್ರಿ ಹಬ್ಬ ಮತ್ತು ಚಂಡಿ/ದುರ್ಗಾ ಹೋಮ ಸೇವೆ." />
-  <title>ಶ್ರೀ ದುರ್ಗಾದೇವಿ ದೇವಸ್ಥಾನ, ಹಿರೇಕೆರೂರು | ನವರಾತ್ರಿ ಹೋಮ ಸೇವೆ</title>
+  <title>ಶ್ರೀ ದುರ್ಗಾದೇವಿ ದೇವಸ್ಥಾನ, ಹಿರೇಕೆರೂರು | ನವರಾತ್ರಿ</title>
+  <meta name="description" content="ಶ್ರೀ ದುರ್ಗಾದೇವಿ ದೇವಸ್ಥಾನ, ಹಿರೇಕೆರೂರು — 9-ದಿನ ನವರಾತ್ರಿ ಹಬ್ಬ." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Manrope:wght@400;500;600;700&family=Noto+Sans+Kannada:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -28,7 +28,6 @@
         <ul id="nav-menu" class="nav-menu">
           <li><a href="#about" data-i18n="navAbout">ಪರಿಚಯ</a></li>
           <li><a href="#schedule" data-i18n="navSchedule">ವೇಳಾಪಟ್ಟಿ</a></li>
-          <li><a href="#seva" data-i18n="navSeva">ಸೇವೆ ಬುಕ್</a></li>
           <li><a href="#darshan" data-i18n="navDarshan">ಗ್ಯಾಲರಿ</a></li>
           <li><a href="#visit" data-i18n="navVisit">ಭೇಟಿ</a></li>
         </ul>
@@ -67,8 +66,8 @@
         </div>
 
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#seva" data-i18n="heroCta">Book Navaratri 9-Day Homa Seva</a>
-          <a class="btn btn-ghost" href="#schedule" data-i18n="heroSecondary">View Ritual Schedule</a>
+          <a class="btn btn-primary" href="#schedule" data-i18n="heroCta">View Ritual Schedule</a>
+          <a class="btn btn-ghost" href="#visit" data-i18n="heroSecondary">Contact & Visit</a>
         </div>
       </div>
     </section>
@@ -301,117 +300,6 @@
       </div>
     </section>
 
-    <section class="section seva" id="seva" aria-labelledby="seva-title">
-      <div class="section-inner">
-        <header class="section-head">
-          <p class="eyebrow" data-i18n="sevaEyebrow">Seva Booking</p>
-          <h2 id="seva-title" data-i18n="sevaTitle">Register for Navaratri Homa Seva</h2>
-          <p class="section-lead" data-i18n="sevaLead">
-            Offer sankalpa in your family’s name. Complete the form and confirm payment via UPI.
-          </p>
-        </header>
-
-        <form class="seva-form" id="seva-form" novalidate>
-          <div class="form-grid">
-            <label>
-              <span data-i18n="labelName">Devotee Name</span>
-              <input type="text" name="name" required autocomplete="name" />
-            </label>
-            <label>
-              <span data-i18n="labelGotra">Gotra</span>
-              <select name="gotra" id="gotra-select" required></select>
-            </label>
-            <label>
-              <span data-i18n="labelRashi">Rashi</span>
-              <select name="rashi" id="rashi-select" required></select>
-            </label>
-            <label>
-              <span data-i18n="labelNakshatra">Nakshatra</span>
-              <select name="nakshatra" id="nakshatra-select" required></select>
-            </label>
-            <label>
-              <span data-i18n="labelMobile">Mobile Number</span>
-              <input type="tel" name="mobile" required pattern="[6-9][0-9]{9}" inputmode="numeric" maxlength="10" autocomplete="tel" />
-            </label>
-            <label class="full">
-              <span data-i18n="labelAddress">Address</span>
-              <textarea name="address" rows="3" required autocomplete="street-address"></textarea>
-            </label>
-            <fieldset class="full seva-options">
-              <legend data-i18n="labelSeva">Seva Selection</legend>
-              <label class="radio">
-                <input type="radio" name="seva" value="full9" checked />
-                <span data-i18n="sevaFull">Full 9-day Homa Sankalpa</span>
-              </label>
-              <label class="radio">
-                <input type="radio" name="seva" value="single" />
-                <span data-i18n="sevaSingle">Single Day Homa</span>
-              </label>
-              <label class="radio">
-                <input type="radio" name="seva" value="annadana" />
-                <span data-i18n="sevaAnnadana">Annadana Seva</span>
-              </label>
-              <label class="radio">
-                <input type="radio" name="seva" value="kumkum" />
-                <span data-i18n="sevaKumkum">Kumkumarchana</span>
-              </label>
-            </fieldset>
-            <div class="day-select full" data-day-select hidden>
-              <label for="day-select">
-                <span data-i18n="labelDayPick">Preferred Day</span>
-              </label>
-              <select name="day" id="day-select">
-                <option value="1" data-i18n="optDay1">Day 1 — Mahaganapathi Homa</option>
-                <option value="2" data-i18n="optDay2">Day 2 — Navagraha Homa</option>
-                <option value="3" data-i18n="optDay3">Day 3 — Sudarshana Homa</option>
-                <option value="4" data-i18n="optDay4">Day 4 — Sapthashati Homa</option>
-                <option value="5" data-i18n="optDay5">Day 5 — Chandi Homa</option>
-                <option value="6" data-i18n="optDay6">Day 6 — Navachandi Homa</option>
-                <option value="7" data-i18n="optDay7">Day 7 — Maha Chandi Homa</option>
-                <option value="8" data-i18n="optDay8">Day 8 — Durga Homa</option>
-                <option value="9" data-i18n="optDay9">Day 9 — Vijayadashami Poornahuti</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="payment-block">
-            <h3 data-i18n="payTitle">UPI / QR Payment</h3>
-            <p data-i18n="payNote">Scan the auto-generated QR (free UPI), pay the seva amount, then submit. Optional: add UTR after payment.</p>
-            <div class="payment-row">
-              <div class="qr-box">
-                <canvas id="upi-qr" width="180" height="180" aria-label="UPI payment QR"></canvas>
-                <span class="qr-amount" id="qr-amount">₹1101</span>
-                <span data-i18n="qrLabel">Scan to pay (UPI)</span>
-              </div>
-              <div class="upi-details">
-                <p class="upi-id"><span data-i18n="upiLabel">UPI ID:</span> <code id="upi-id-text">7892655210@ybl</code></p>
-                <p class="upi-hint" data-i18n="upiHint">Free QR updates when you change seva. Edit UPI ID in script.js if needed.</p>
-                <p class="pay-amount-line"><span data-i18n="labelAmount">Seva Amount:</span> <strong id="seva-amount-text">₹1101</strong></p>
-                <label>
-                  <span data-i18n="labelTxn">Transaction / UTR (optional)</span>
-                  <input type="text" name="txn" placeholder="e.g. 312345678901" />
-                </label>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-actions">
-            <button type="submit" class="btn btn-primary" data-i18n="submitBtn">Submit Seva Registration</button>
-            <p class="form-status" id="form-status" role="status" hidden></p>
-          </div>
-        </form>
-
-        <div class="after-submit" id="after-submit" hidden>
-          <h3 data-i18n="afterTitle">Registration saved — next steps (all free)</h3>
-          <p id="after-message" data-i18n="afterLead">Your details are stored. Pay via QR if pending, then use WhatsApp to send welcome / notify the temple.</p>
-          <div class="after-actions">
-            <a class="btn btn-primary" id="wa-welcome-btn" target="_blank" rel="noopener">WhatsApp Welcome</a>
-            <a class="btn btn-ghost" id="wa-temple-btn" target="_blank" rel="noopener">Notify Temple WhatsApp</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <section class="section darshan" id="darshan" aria-labelledby="darshan-title">
       <div class="section-inner">
         <header class="section-head">
@@ -493,41 +381,16 @@
               <a href="tel:+917892655210">+91 78926 55210</a>
             </li>
             <li>
-              <span data-i18n="contactSeva">Seva Desk / WhatsApp</span>
+              <span data-i18n="contactSeva">WhatsApp</span>
               <a href="https://wa.me/917892655210" target="_blank" rel="noopener">+91 78926 55210</a>
             </li>
             <li>
               <span data-i18n="contactEmail">Email</span>
-              <a href="mailto:seva@sridurgadevihirekerur.org">seva@sridurgadevihirekerur.org</a>
+              <a href="mailto:durgadevihirekerur@gmail.com">durgadevihirekerur@gmail.com</a>
             </li>
           </ul>
-          <div class="admin-excel" id="admin-excel">
-            <h3 class="admin-title" data-i18n="adminTitle">Committee login — Excel</h3>
-            <p class="visit-note" data-i18n="excelNote">Only logged-in temple users can download the member Excel sheet.</p>
-
-            <form class="admin-login" id="admin-login" autocomplete="on">
-              <label>
-                <span data-i18n="adminEmailLabel">Email</span>
-                <input type="email" name="adminEmail" required autocomplete="username" />
-              </label>
-              <label>
-                <span data-i18n="adminPasswordLabel">Password</span>
-                <input type="password" name="adminPassword" required autocomplete="current-password" />
-              </label>
-              <button type="submit" class="btn btn-primary" data-i18n="adminLoginBtn">Login</button>
-              <p class="form-status" id="admin-login-status" role="status" hidden></p>
-            </form>
-
-            <div class="admin-panel" id="admin-panel" hidden>
-              <p class="admin-logged" data-i18n="adminLoggedIn">Logged in as committee</p>
-              <div class="after-actions">
-                <button type="button" class="btn btn-primary" id="excel-admin-btn" data-i18n="excelAdminBtn">Download member Excel sheet</button>
-                <button type="button" class="btn btn-ghost" id="admin-logout-btn" data-i18n="adminLogoutBtn">Logout</button>
-              </div>
-            </div>
-          </div>
           <p class="visit-note" data-i18n="visitNote">
-            WhatsApp seva desk: +91 78926 55210
+            WhatsApp: +91 78926 55210
           </p>
         </div>
         <div class="map-wrap">
@@ -551,8 +414,6 @@
     </div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js" defer></script>
   <script src="script.js" defer></script>
 </body>
 </html>
